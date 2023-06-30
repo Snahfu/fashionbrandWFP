@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\JenisController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\ProdukController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +19,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Jenis
+Route::resource('jenis', JenisController::class);
+Route::post('jenis/getEditForm', [JenisController::class, 'getEditForm'])->name('jenis.getEditForm');
+
+// Kategori
+Route::resource('kategori', KategoriController::class);
+
+// Produk
+Route::resource('produk', ProdukController::class);

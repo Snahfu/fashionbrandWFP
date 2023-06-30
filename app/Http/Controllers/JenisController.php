@@ -15,7 +15,8 @@ class JenisController extends Controller
      */
     public function index()
     {
-        //
+        $jenises = Jenis::all();
+        return view('admin.jenis.index', compact('jenises'));
     }
 
     /**
@@ -36,7 +37,15 @@ class JenisController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = new Jenis();
+        $data->nama = $request->get('nama');
+        $data->deskripsi = $request->get('desc');
+        $data->save();
+        return response()->json(array(
+            'status' => 'oke',
+            'msg' => 'Berhasil menambah data!',
+            'id' => $data->id,
+        ),200);
     }
 
     /**
@@ -68,9 +77,27 @@ class JenisController extends Controller
      * @param  \App\Models\Jenis  $jenis
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Jenis $jenis)
+
+    public function getEditForm(Request $request)
     {
-        //
+        $id = $request->get('id');
+        $data = Jenis::find($id);
+        return response()->json(array(
+            'status' => 'oke',
+            'msg' => view('admin.jenis.edit', compact('data'))->render(),
+        ));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = Jenis::find($id);
+        $data->nama = $request->get('nama');
+        $data->deskripsi = $request->get('desc');
+        $data->save();
+        return response()->json(array(
+            'status' => 'oke',
+            'msg' => 'Berhasil mengubah data!'
+        ),200);
     }
 
     /**
@@ -79,8 +106,13 @@ class JenisController extends Controller
      * @param  \App\Models\Jenis  $jenis
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Jenis $jenis)
+    public function destroy($id)
     {
-        //
+        $data = Jenis::find($id);
+        $data->delete();
+        return response()->json(array(
+            'status' => 'oke',
+            'msg' => 'Data berhasil dihapus!'
+        ),200);
     }
 }

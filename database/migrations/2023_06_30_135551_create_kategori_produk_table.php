@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJenisesTable extends Migration
+class CreateKategoriProdukTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateJenisesTable extends Migration
      */
     public function up()
     {
-        Schema::create('jenises', function (Blueprint $table) {
-            $table->id();
-            $table->string("nama", 255)->unique();
-            $table->string("deskripsi", 255);
+        Schema::create('kategori_produk', function (Blueprint $table) {
+            $table->foreignId('kategori_id')->constrained('kategoris');
+            $table->foreignId('produk_id')->constrained('produks');
+            $table->primary(['kategori_id', 'produk_id']);
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateJenisesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jenises');
+        Schema::dropIfExists('kategori_produk');
     }
 }
