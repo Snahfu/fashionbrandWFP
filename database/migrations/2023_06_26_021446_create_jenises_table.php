@@ -15,6 +15,8 @@ class CreateJenisTable extends Migration
     {
         Schema::create('jenises', function (Blueprint $table) {
             $table->id();
+            $table->string("nama", 255)->unique();
+            $table->string("deskripsi", 255);
             $table->timestamps();
         });
     }
