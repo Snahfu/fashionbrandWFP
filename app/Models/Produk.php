@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Produk extends Model
 {
     use HasFactory;
+
+    public function jenis() {
+        return $this->belongsTo(Jenis::class);
+    }
 }

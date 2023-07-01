@@ -9,4 +9,8 @@ class Jenis extends Model
 {
     use HasFactory;
     protected $table = 'jenises';
+
+    public function produks() {
+        return $this->hasMany(Produk::class);
+    }
 }
