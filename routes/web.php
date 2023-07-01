@@ -26,6 +26,7 @@ Route::post('jenis/getEditForm', [JenisController::class, 'getEditForm'])->name(
 
 // Kategori
 Route::resource('kategori', KategoriController::class);
+Route::post('kategori/getEditForm', [KategoriController::class, 'getEditForm'])->name('kategori.getEditForm');
 
 // Produk
 Route::resource('produk', ProdukController::class);

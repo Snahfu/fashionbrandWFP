@@ -15,7 +15,8 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        //
+        $kategoris = Kategori::all();
+        return view('admin.kategori.index', compact('kategoris'));
     }
 
     /**
@@ -36,7 +37,15 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = new Kategori();
+        $data->nama = $request->get('nama');
+        $data->deskripsi = $request->get('desc');
+        $data->save();
+        return response()->json(array(
+            'status' => 'oke',
+            'msg' => 'Berhasil menambah data!',
+            'id' => $data->id,
+        ),200);
     }
 
     /**
@@ -68,9 +77,27 @@ class KategoriController extends Controller
      * @param  \App\Models\Kategori  $kategori
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kategori $kategori)
+
+    public function getEditForm(Request $request)
     {
-        //
+        $id = $request->get('id');
+        $data = Kategori::find($id);
+        return response()->json(array(
+            'status' => 'oke',
+            'msg' => view('admin.kategori.edit', compact('data'))->render(),
+        ));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = Kategori::find($id);
+        $data->nama = $request->get('nama');
+        $data->deskripsi = $request->get('desc');
+        $data->save();
+        return response()->json(array(
+            'status' => 'oke',
+            'msg' => 'Berhasil mengubah data!'
+        ),200);
     }
 
     /**
@@ -79,8 +106,13 @@ class KategoriController extends Controller
      * @param  \App\Models\Kategori  $kategori
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kategori $kategori)
+    public function destroy($id)
     {
-        //
+        $data = Kategori::find($id);
+        $data->delete();
+        return response()->json(array(
+            'status' => 'oke',
+            'msg' => 'Data berhasil dihapus!'
+        ),200);
     }
 }

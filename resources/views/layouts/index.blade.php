@@ -21,6 +21,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/datatables/css/dataTables.bootstrap4.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/datatables/css/responsive.bootstrap4.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/styles/style.css') }}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
 
 	<!-- Global site tag (gtag.js') }}) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
@@ -450,7 +451,7 @@
 	<div class="mobile-menu-overlay"></div>
 
 	<div class="main-container">
-		<div class="pd-ltr-20">
+		<div class="pd-ltr-20 pb-10">
 			@yield('konten')
 		</div>
 	</div>
@@ -465,6 +466,7 @@
 	<script src="{{ asset('assets/plugins/datatables/js/dataTables.responsive.min.js') }}"></script>
 	<script src="{{ asset('assets/plugins/datatables/js/responsive.bootstrap4.min.js') }}"></script>
 	<script src="{{ asset('assets/vendors/scripts/dashboard.js') }}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 	@yield('javascript')
 </body>
 </html>
