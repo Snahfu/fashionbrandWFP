@@ -9,7 +9,14 @@ class Produk extends Model
 {
     use HasFactory;
 
-    public function jenis() {
+    public function jenis()
+    {
         return $this->belongsTo(Jenis::class);
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Produk::class)
+            ->withPivot('kuantitas', 'harga', 'subtotal');
     }
 }
