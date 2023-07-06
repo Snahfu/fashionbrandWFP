@@ -30,3 +30,4 @@ Route::post('kategori/getEditForm', [KategoriController::class, 'getEditForm'])-
 
 // Produk
 Route::resource('produk', ProdukController::class);
+Route::post('produk/getEditForm', [ProdukController::class, 'getEditForm'])->name('produk.getEditForm');

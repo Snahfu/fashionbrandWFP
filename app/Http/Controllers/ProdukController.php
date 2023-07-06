@@ -9,6 +9,7 @@ use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 Use Alert;
+use App\Models\KategoriProduk;
 
 class ProdukController extends Controller
 {
@@ -112,9 +113,19 @@ class ProdukController extends Controller
      * @param  \App\Models\Produk  $produk
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Produk $produk)
+    public function update(Request $request, $id)
     {
-        //
+        $data = Produk::find($id);
+        $data->nama_produk = $request->get('namaproduk');
+        $data->brand_produk = $request->get('brandproduk');
+        $data->harga = $request->get('hargaproduk');
+        $data->dimensi = $request->get('dimensiproduk');
+        $data->jenis_id = $request->get('jenisproduk');
+        $data->save();
+        return response()->json(array(
+            'status' => 'oke',
+            'msg' => 'Berhasil mengubah data!'
+        ),200);
     }
 
     /**
@@ -123,8 +134,27 @@ class ProdukController extends Controller
      * @param  \App\Models\Produk  $produk
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Produk $produk)
+    public function destroy($id)
     {
-        
+        try {
+            KategoriProduk::where('produk_id', $id)->delete();
+            $produk = Produk::find($id);
+            $produk->delete();
+            return redirect()->route('produk.index')->with('success', 'Berhasil menghapus data!');
+        } catch (\PDOException $ex) {
+            return redirect()->route('produk.index')->with('errors', 'Data Gagal dihapus. Pastikan kembali tidak ada data yang berelasi sebelum dihapus');
+        }
+    }
+
+    public function getEditForm(Request $request)
+    {
+        $id = $request->get('id');
+        $data = Produk::find($id);
+        $jenises = Jenis::all();
+        $kategoris = Kategori::all();
+        return response()->json(array(
+            'status' => 'oke',
+            'msg' => view('admin.produk.edit', compact('data', 'jenises', 'kategoris'))->render(),
+        ));
     }
 }

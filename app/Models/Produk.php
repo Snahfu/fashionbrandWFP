@@ -16,9 +16,9 @@ class Produk extends Model
         return $this->belongsTo(Jenis::class);
     }
 
-    public function kategori()
+    public function kategoriproduk()
     {
-        return $this->belongsTo(Kategori::class);
+        return $this->hasMany(KategoriProduk::class);
     }
 
     public function orders()
