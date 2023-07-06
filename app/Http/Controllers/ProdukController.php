@@ -8,6 +8,7 @@ use App\Models\Jenis;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+Use Alert;
 
 class ProdukController extends Controller
 {
@@ -21,6 +22,7 @@ class ProdukController extends Controller
         $jenises = Jenis::all();
         $kategoris = Kategori::all();
         $produks = Produk::all();
+        confirmDelete('Yakin ingin menghapus data?');
         return view('admin.produk.index', compact('jenises', 'kategoris', 'produks'));
     }
 
@@ -70,14 +72,15 @@ class ProdukController extends Controller
             ]);
         }
 
-        return response()->json(array(
-            'status' => 'oke',
-            'msg' => 'Berhasil menambah data!',
-            'id' => $data->id,
-            'img' => $data->url_gambar,
-            'nama' => $data->nama_produk,
-            'harga' => $data->harga,
-        ),200);
+        // return response()->json(array(
+        //     'status' => 'oke',
+        //     'msg' => 'Berhasil menambah data!',
+        //     'id' => $data->id,
+        //     'img' => $data->url_gambar,
+        //     'nama' => $data->nama_produk,
+        //     'harga' => $data->harga,
+        // ),200);
+        
     }
 
     /**
@@ -122,6 +125,6 @@ class ProdukController extends Controller
      */
     public function destroy(Produk $produk)
     {
-        //
+        
     }
 }

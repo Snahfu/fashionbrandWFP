@@ -29,6 +29,12 @@ Produk
                                     <ins style="margin: 0">Rp. {{ $produk->harga }}</ins>
                                 </div>
                                 <a href="#" class="btn btn-outline-primary">Read More</a>
+                                <form style="display: inline-block" action="{{ route('produk.destroy', $produk->id) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input id="btndelete" type="submit" value="Delete" class="btn btn-outline-danger" data-confirm-delete="true">
+                                </form>
+                                {{-- <button class="btn btn-outline-danger">Delete</button> --}}
                             </div>
                         </div>
                     </li>
@@ -54,7 +60,7 @@ Produk
 <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form method="post" enctype="multipart/form-data" id="formcreate">
+            <form action="{{ route('produk.store') }}" method="post" enctype="multipart/form-data" id="formcreate">
                 @csrf
                 @method('POST')
                 <div class="modal-header">
@@ -127,23 +133,26 @@ Produk
 
 @section('javascript')
 <script>
-$('#formcreate').on('submit', function(event){
-    event.preventDefault();
-    $.ajax({
-        url:"{{ route('produk.store') }}",
-        method:"POST",
-        data:new FormData(this),
-        dataType:'JSON',
-        contentType: false,
-        cache: false,
-        processData: false,
-        success:function(data)
-        {
-            var url = "{{ asset('images/'.":img") }}";
-            url = url.replace(':img', data.img);
-            $("#catalog").append("<li class='col-lg-4 col-md-6 col-sm-12'><div class='product-box'><div class='producct-img'><img src='" + url + "' alt=''></div><div class='product-caption'><h4><a href='#'>" + data.nama + "</a></h4><div class='price'><ins style='margin: 0'>Rp. " + data.harga + "</ins></div><a href='#' class='btn btn-outline-primary'>Read More</a></div></div></li>");
-        }
+    $("#btndelete").click(function(){
+        $('#swal2-html-container').html('cc');
     })
-});
+// $('#formcreate').on('submit', function(event){
+//     event.preventDefault();
+//     $.ajax({
+//         url:"{{ route('produk.store') }}",
+//         method:"POST",
+//         data:new FormData(this),
+//         dataType:'JSON',
+//         contentType: false,
+//         cache: false,
+//         processData: false,
+//         success:function(data)
+//         {
+//             var url = "{{ asset('images/'.":img") }}";
+//             url = url.replace(':img', data.img);
+//             $("#catalog").append("<li class='col-lg-4 col-md-6 col-sm-12'><div class='product-box'><div class='producct-img'><img src='" + url + "' alt=''></div><div class='product-caption'><h4><a href='#'>" + data.nama + "</a></h4><div class='price'><ins style='margin: 0'>Rp. " + data.harga + "</ins></div><a href='#' class='btn btn-outline-primary'>Read More</a></div></div></li>");
+//         }
+//     })
+// });
 </script>
 @endsection
