@@ -26,8 +26,8 @@ Jenis
                 @foreach ($jenises as $jenis)
                     <tr id="tr_{{ $jenis->id }}">
                         <th scope="row">{{ $jenis->id }}</th>
-                        <td id="td_nama_{{ $jenis->id }}">{{ $jenis->nama }}</td>
-                        <td id="td_desc_{{ $jenis->id }}">{{ $jenis->deskripsi }}</td>
+                        <td class="editable" id="td_nama_{{ $jenis->id }}">{{ $jenis->nama }}</td>
+                        <td class="editable" id="td_desc_{{ $jenis->id }}">{{ $jenis->deskripsi }}</td>
                         <td>
                             <a href="#modalEdit" onclick="getEditForm({{ $jenis->id }})" data-toggle="modal" class="btn btn-primary btn-sm" style="display: inline-block">Ubah</a>
                             <button class="btn btn-danger btn-sm" style="display: inline-block" onclick="if(confirm('yakin ingin menghapus {{ $jenis->id }} - {{ $jenis->nama }}?')) deleteDataRemoveTR({{ $jenis->id }})">Hapus</button>
@@ -173,5 +173,30 @@ Jenis
             }
         });
     }
+
+    $('.editable').editable({
+        closeOnEnter: true,
+        callback:function(data){
+            if(data.content){
+                var j_id = data.$el[0].id;
+                var fname = j_id.split('_')[1];
+                var id = j_id.split('_')[2];
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route("jenis.saveDataField") }}',
+                    data: {
+                        '_token':'<?php echo csrf_token() ?>',
+                        'id':id,
+                        'fname':fname,
+                        'value':data.content,
+                    },
+                    success: function(data) {
+                        alert(data.msg);
+                    }
+                });
+            }
+        }
+    })
 </script>
 @endsection

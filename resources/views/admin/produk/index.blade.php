@@ -28,14 +28,14 @@ Produk
                                 <div class="price">
                                     <ins style="margin: 0">Rp. {{ $produk->harga }}</ins>
                                 </div>
-                                <a href="#" class="btn btn-outline-primary">Read More</a>
+                                <a href="#modalShow" data-toggle="modal" class="btn btn-outline-primary" onclick="getShowModal({{ $produk->id }}) ">Selengkapnya</a>
                                 {{-- <form style="display: inline-block" action="{{ route('produk.destroy', $produk->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <input id="btndelete" type="submit" value="Delete" class="btn btn-outline-danger" data-confirm-delete="true">
                                 </form> --}}
-                                <a class="btn btn-outline-info" href="#modalUpdate" data-toggle="modal" onclick="getEditForm({{ $produk->id }})">Edit</a>
-                                <a id="btndelete" href="{{ route('produk.destroy', $produk->id) }}" class="btn btn-outline-danger" data-confirm-delete="true">Delete</a>
+                                <a class="btn btn-outline-info" href="#modalUpdate" data-toggle="modal" onclick="getEditForm({{ $produk->id }})">Ubah</a>
+                                <a id="btndelete" href="{{ route('produk.destroy', $produk->id) }}" class="btn btn-outline-danger" data-confirm-delete="true">Hapus</a>
                             </div>
                         </div>
                     </li>
@@ -136,6 +136,22 @@ Produk
         <div class="modal-content" id="modalContent"></div>
     </div>
 </div>
+
+<div class="modal fade" id="modalShow" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="contentShow">
+            {{-- <div class="card">
+                <img class="card-img-top" src="{{ asset('images/1688233951_sepatuu.jpg') }}">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <small><b><a href="#" style="pointer-events: none; cursor: default;" class="card-link text-muted">aaaaa</a></b></small>
+                    <small><b><a href="#" style="pointer-events: none; cursor: default;" class="card-link text-muted ml-3">bbbbb, ccccc, ddddd</a></b></small>
+                </div>
+            </div> --}}
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('javascript')
@@ -151,6 +167,21 @@ Produk
             },
             success: function(data){
                 $('#modalContent').html(data.msg);
+            }
+        });
+    }
+
+    function getShowModal(id) 
+    {
+        $.ajax({
+            type:'POST',
+            url:'{{ route("produk.getShowModal") }}',
+            data:{
+                '_token':'<?php echo csrf_token() ?>',
+                'id':id,
+            },
+            success: function(data){
+                $('#contentShow').html(data.msg);
             }
         });
     }

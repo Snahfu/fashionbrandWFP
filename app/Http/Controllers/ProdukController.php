@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 Use Alert;
 use App\Models\KategoriProduk;
+use Illuminate\Support\Facades\File;
 
 class ProdukController extends Controller
 {
@@ -73,6 +74,7 @@ class ProdukController extends Controller
             ]);
         }
 
+        return redirect()->route('produk.index')->with('success', 'Berhasil menambah data!');
         // return response()->json(array(
         //     'status' => 'oke',
         //     'msg' => 'Berhasil menambah data!',
@@ -116,16 +118,44 @@ class ProdukController extends Controller
     public function update(Request $request, $id)
     {
         $data = Produk::find($id);
+        $old = $data->url_gambar;
+
+        // update image
+        $file = $request->file('gambarproduk');
+        $imgFolder = 'images';
+        $imgFile = time()."_".$file->getClientOriginalName();
+        $file->move($imgFolder, $imgFile);
+        $data->url_gambar = $imgFile;
+
+        // update & save
         $data->nama_produk = $request->get('namaproduk');
         $data->brand_produk = $request->get('brandproduk');
         $data->harga = $request->get('hargaproduk');
         $data->dimensi = $request->get('dimensiproduk');
         $data->jenis_id = $request->get('jenisproduk');
         $data->save();
-        return response()->json(array(
-            'status' => 'oke',
-            'msg' => 'Berhasil mengubah data!'
-        ),200);
+
+        // delete kategori_produk
+        DB::table('kategori_produk')->where('produk_id', $id)->delete();
+
+        // save kategori_produk
+        $kategoris_id = $request->get('kategoriproduk');
+        foreach($kategoris_id as $cid) {
+            DB::table('kategori_produk')->insert([
+                'kategori_id' => $cid,
+                'produk_id' => $id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        // delete old image
+        $image_path = public_path('images/'.$old);
+        if(File::exists($image_path)) {
+            File::delete($image_path);
+        }
+
+        return redirect()->route('produk.index')->with('success', 'Berhasil mengubah data!');
     }
 
     /**
@@ -155,6 +185,18 @@ class ProdukController extends Controller
         return response()->json(array(
             'status' => 'oke',
             'msg' => view('admin.produk.edit', compact('data', 'jenises', 'kategoris'))->render(),
+        ));
+    }
+
+    public function getShowModal(Request $request)
+    {
+        $id = $request->get('id');
+        $data = Produk::find($id);
+        $kategoris = DB::select(DB::raw("SELECT * FROM kategoris k INNER JOIN (SELECT kategori_id FROM kategori_produk WHERE produk_id=$id) kp ON k.id = kp.kategori_id"));
+
+        return response()->json(array(
+            'status' => 'oke',
+            'msg' => view('admin.produk.show', compact('data', 'kategoris'))->render(),
         ));
     }
 }

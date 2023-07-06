@@ -23,6 +23,7 @@ Route::get('/', function () {
 // Jenis
 Route::resource('jenis', JenisController::class);
 Route::post('jenis/getEditForm', [JenisController::class, 'getEditForm'])->name('jenis.getEditForm');
+Route::post('jenis/saveDataField', [JenisController::class, 'saveDataField'])->name('jenis.saveDataField');
 
 // Kategori
 Route::resource('kategori', KategoriController::class);
@@ -31,3 +32,4 @@ Route::post('kategori/getEditForm', [KategoriController::class, 'getEditForm'])-
 // Produk
 Route::resource('produk', ProdukController::class);
 Route::post('produk/getEditForm', [ProdukController::class, 'getEditForm'])->name('produk.getEditForm');
+Route::post('produk/getShowModal', [ProdukController::class, 'getShowModal'])->name('produk.getShowModal');

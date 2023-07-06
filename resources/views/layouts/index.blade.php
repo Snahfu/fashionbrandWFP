@@ -466,6 +466,7 @@
 	<script src="{{ asset('assets/plugins/datatables/js/dataTables.responsive.min.js') }}"></script>
 	<script src="{{ asset('assets/plugins/datatables/js/responsive.bootstrap4.min.js') }}"></script>
 	<script src="{{ asset('assets/vendors/scripts/dashboard.js') }}"></script>
+	<script src="{{ asset('assets/vendors/scripts/jquery.editable.min.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 	@include('sweetalert::alert')
 	@yield('javascript')
