@@ -12,14 +12,14 @@ Jenis
             <a class="btn btn-success btn-sm ml-2" href="#modalCreate" data-toggle="modal" style="display: inline-block">+</a>
         </div>
     </div>
-    <div class="table-responsive">
-        <table class="table table-striped" id="tabeljenis">
+    {{-- <div class="table-responsive"> --}}
+        <table class="data-table table stripe hover nowrap" id="tabeljenis">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Nama</th>
                     <th scope="col">Deskripsi</th>
-                    <th scope="col">Aksi</th>
+                    <th scope="col" class="datatable-nosort">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,7 +27,7 @@ Jenis
                     <tr id="tr_{{ $jenis->id }}">
                         <th scope="row">{{ $jenis->id }}</th>
                         <td class="editable" id="td_nama_{{ $jenis->id }}">{{ $jenis->nama }}</td>
-                        <td class="editable" id="td_desc_{{ $jenis->id }}">{{ $jenis->deskripsi }}</td>
+                        <td class="editable" id="td_deskripsi_{{ $jenis->id }}">{{ $jenis->deskripsi }}</td>
                         <td>
                             <a href="#modalEdit" onclick="getEditForm({{ $jenis->id }})" data-toggle="modal" class="btn btn-primary btn-sm" style="display: inline-block">Ubah</a>
                             <button class="btn btn-danger btn-sm" style="display: inline-block" onclick="if(confirm('yakin ingin menghapus {{ $jenis->id }} - {{ $jenis->nama }}?')) deleteDataRemoveTR({{ $jenis->id }})">Hapus</button>
@@ -36,7 +36,7 @@ Jenis
                 @endforeach
             </tbody>
         </table>
-    </div>
+    {{-- </div> --}}
 </div>
 
 <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog">
@@ -103,7 +103,7 @@ Jenis
             },
             success: function(data){
                 if(data.status == 'oke') {
-                    $("#tabeljenis > tbody").append("<tr id='tr_" + data.id + "'><th scope='row'>" + data.id + "</th><td id='td_nama_" + data.id + "'>" + nama + "</td><td id='td_desc_" + data.id + "'>" + desc + "</td><td><a href='#modalEdit' onclick='getEditForm(" + data.id + ")' data-toggle='modal' class='btn btn-primary btn-sm' style='display: inline-block'>Ubah</a><button class='btn btn-danger btn-sm' style='display: inline-block' onclick='if(confirm(\"yakin ingin menghapus " + data.id + " - " + nama + "?\")) deleteDataRemoveTR(" + data.id + ")'>Hapus</button>" + "</td></tr>");
+                    $("#tabeljenis > tbody").append("<tr id='tr_" + data.id + "'><th scope='row'>" + data.id + "</th><td id='td_nama_" + data.id + "'>" + nama + "</td><td id='td_deskripsi_" + data.id + "'>" + desc + "</td><td><a href='#modalEdit' onclick='getEditForm(" + data.id + ")' data-toggle='modal' class='btn btn-primary btn-sm' style='display: inline-block'>Ubah</a><button class='btn btn-danger btn-sm' style='display: inline-block' onclick='if(confirm(\"yakin ingin menghapus " + data.id + " - " + nama + "?\")) deleteDataRemoveTR(" + data.id + ")'>Hapus</button>" + "</td></tr>");
                     $('#modalCreate').modal('hide');
                     $('#namajenis').val('');
                     $('#descjenis').val('');
@@ -146,7 +146,7 @@ Jenis
             success: function(data){
                 if(data.status == 'oke') {
                     $('#td_nama_'+id).html(nama);
-                    $('#td_desc_'+id).html(desc);
+                    $('#td_deskripsi_'+id).html(desc);
                     $('#modalEdit').modal('hide');
                     alert(data.msg);
                 }

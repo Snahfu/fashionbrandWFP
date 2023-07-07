@@ -28,6 +28,7 @@ Route::post('jenis/saveDataField', [JenisController::class, 'saveDataField'])->n
 // Kategori
 Route::resource('kategori', KategoriController::class);
 Route::post('kategori/getEditForm', [KategoriController::class, 'getEditForm'])->name('kategori.getEditForm');
+Route::post('kategori/saveDataField', [KategoriController::class, 'saveDataField'])->name('kategori.saveDataField');
 
 // Produk
 Route::resource('produk', ProdukController::class);

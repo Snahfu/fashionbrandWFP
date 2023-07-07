@@ -12,31 +12,40 @@ Kategori
             <a class="btn btn-success btn-sm ml-2" href="#modalCreate" data-toggle="modal" style="display: inline-block">+</a>
         </div>
     </div>
-    <div class="table-responsive">
-        <table class="table table-striped" id="tabelkategori">
+    {{-- <div class="table-responsive"> --}}
+        <table class="data-table table stripe hover nowrap" id="tabelkategori">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Nama</th>
                     <th scope="col">Deskripsi</th>
-                    <th scope="col">Aksi</th>
+                    <th scope="col" class="datatable-nosort">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($kategoris as $kategori)
                     <tr id="tr_{{ $kategori->id }}">
                         <th scope="row">{{ $kategori->id }}</th>
-                        <td id="td_nama_{{ $kategori->id }}">{{ $kategori->nama }}</td>
-                        <td id="td_desc_{{ $kategori->id }}">{{ $kategori->deskripsi }}</td>
+                        <td class="editable" id="td_nama_{{ $kategori->id }}">{{ $kategori->nama }}</td>
+                        <td class="editable" id="td_deskripsi_{{ $kategori->id }}">{{ $kategori->deskripsi }}</td>
                         <td>
-                            <a href="#modalEdit" onclick="getEditForm({{ $kategori->id }})" data-toggle="modal" class="btn btn-primary btn-sm" style="display: inline-block">Ubah</a>
-                            <button class="btn btn-danger btn-sm" style="display: inline-block" onclick="if(confirm('yakin ingin menghapus {{ $kategori->id }} - {{ $kategori->nama }}?')) deleteDataRemoveTR({{ $kategori->id }})">Hapus</button>
+                            {{-- <a href="#modalEdit" onclick="getEditForm({{ $kategori->id }})" data-toggle="modal" class="btn btn-primary btn-sm" style="display: inline-block">Ubah</a>
+                            <button class="btn btn-danger btn-sm" style="display: inline-block" onclick="if(confirm('yakin ingin menghapus {{ $kategori->id }} - {{ $kategori->nama }}?')) deleteDataRemoveTR({{ $kategori->id }})">Hapus</button> --}}
+                            <div class="dropdown">
+                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                    <i class="dw dw-more"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                    <a class="dropdown-item" href="#modalEdit" onclick="getEditForm({{ $kategori->id }})" data-toggle="modal"><i class="dw dw-edit2"></i> Ubah</a>
+                                    <a class="dropdown-item" href="#"><i class="dw dw-delete-3" onclick="if(confirm('yakin ingin menghapus {{ $kategori->id }} - {{ $kategori->nama }}?')) deleteDataRemoveTR({{ $kategori->id }})"></i> Hapus</a>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-    </div>
+    {{-- </div> --}}
 </div>
 
 <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog">
@@ -103,7 +112,7 @@ Kategori
             },
             success: function(data){
                 if(data.status == 'oke') {
-                    $("#tabelkategori > tbody").append("<tr id='tr_" + data.id + "'><th scope='row'>" + data.id + "</th><td id='td_nama_" + data.id + "'>" + nama + "</td><td id='td_desc_" + data.id + "'>" + desc + "</td><td><a href='#modalEdit' onclick='getEditForm(" + data.id + ")' data-toggle='modal' class='btn btn-primary btn-sm' style='display: inline-block'>Ubah</a><button class='btn btn-danger btn-sm' style='display: inline-block' onclick='if(confirm(\"yakin ingin menghapus " + data.id + " - " + nama + "?\")) deleteDataRemoveTR(" + data.id + ")'>Hapus</button>" + "</td></tr>");
+                    $("#tabelkategori > tbody").append("<tr id='tr_" + data.id + "'><th scope='row'>" + data.id + "</th><td id='td_nama_" + data.id + "'>" + nama + "</td><td id='td_deskripsi_" + data.id + "'>" + desc + "</td><td><a href='#modalEdit' onclick='getEditForm(" + data.id + ")' data-toggle='modal' class='btn btn-primary btn-sm' style='display: inline-block'>Ubah</a><button class='btn btn-danger btn-sm' style='display: inline-block' onclick='if(confirm(\"yakin ingin menghapus " + data.id + " - " + nama + "?\")) deleteDataRemoveTR(" + data.id + ")'>Hapus</button>" + "</td></tr>");
                     $('#modalCreate').modal('hide');
                     $('#namakategori').val('');
                     $('#desckategori').val('');
@@ -146,7 +155,7 @@ Kategori
             success: function(data){
                 if(data.status == 'oke') {
                     $('#td_nama_'+id).html(nama);
-                    $('#td_desc_'+id).html(desc);
+                    $('#td_deskripsi_'+id).html(desc);
                     $('#modalEdit').modal('hide');
                     alert(data.msg);
                 }
@@ -173,5 +182,30 @@ Kategori
             }
         });
     }
+
+    $('.editable').editable({
+        closeOnEnter: true,
+        callback:function(data){
+            if(data.content){
+                var j_id = data.$el[0].id;
+                var fname = j_id.split('_')[1];
+                var id = j_id.split('_')[2];
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route("kategori.saveDataField") }}',
+                    data: {
+                        '_token':'<?php echo csrf_token() ?>',
+                        'id':id,
+                        'fname':fname,
+                        'value':data.content,
+                    },
+                    success: function(data) {
+                        alert(data.msg);
+                    }
+                });
+            }
+        }
+    })
 </script>
 @endsection
