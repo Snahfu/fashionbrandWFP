@@ -88,6 +88,20 @@ class KategoriController extends Controller
         ));
     }
 
+    public function saveDataField(Request $request) {
+        $id = $request->get('id');
+        $fname = $request->get('fname');
+        $value = $request->get('value');
+
+        $jenis = Kategori::find($id);
+        $jenis->$fname = $value;
+        $jenis->save();
+        return response()->json(array(
+            'status' => 'oke',
+            'msg' => 'Berhasil mengubah data!',
+        ));
+    }
+
     public function update(Request $request, $id)
     {
         $data = Kategori::find($id);
