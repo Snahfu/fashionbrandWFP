@@ -32,6 +32,7 @@
 
 		gtag('config', 'UA-119386393-1');
 	</script>
+	@yield('style')
 </head>
 <body>
 	{{-- <div class="pre-loader">
@@ -80,6 +81,8 @@
 	<script src="{{ asset('assets/vendors/scripts/datatable-setting.js') }}"></script>
 	{{-- <script src="{{ asset('assets/vendors/scripts/dashboard.js') }}"></script> --}}
 	<script src="{{ asset('assets/vendors/scripts/jquery.editable.min.js') }}"></script>
+	<script src="{{ asset('assets/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js')}}"></script>
+	<script src="{{ asset('assets/vendors/scripts/advanced-components.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 	@include('sweetalert::alert')
 	@yield('javascript')

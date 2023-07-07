@@ -65,7 +65,7 @@
                 {{-- Pembeli --}}
                 <li>
                     <a href="{{ route('order.transaksi') }}" class="dropdown-toggle no-arrow">
-                        <span class="micon fa fa-plus-square-o"></span><span class="mtext">History Transaksi</span>
+                        <span class="micon fa fa-plus-square-o"></span><span class="mtext">Riwayat Transaksi</span>
                     </a>
                 </li>
 
