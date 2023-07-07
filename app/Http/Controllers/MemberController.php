@@ -13,7 +13,8 @@ class MemberController extends Controller
      */
     public function index()
     {
-        //
+        // Logic ambil semua member
+        return view('admin.member.index');
     }
 
     /**
@@ -23,7 +24,9 @@ class MemberController extends Controller
      */
     public function create()
     {
-        //
+        // Logic ambil semua pembeli yang sudah beli dan belum menjadi member
+
+        return view('admin.member.create');
     }
 
     /**

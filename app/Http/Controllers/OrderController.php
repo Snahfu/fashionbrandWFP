@@ -7,14 +7,21 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        // Logic ambil semua order detail
+        return view('admin.order.index');
+    }
+
+    public function riwayatTransaksi()
+    {
+        // Logic ambil semua transaksi user yang login
+        return view('pembeli.transaksi');
+    }
+
+    public function keranjang()
+    {
+        return view('pembeli.keranjang');
     }
 
     /**

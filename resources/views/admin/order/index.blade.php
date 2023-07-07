@@ -1,7 +1,7 @@
 @extends('layouts.index')
 
 @section('judul')
-Riwayat Transaksi
+Detail Order
 @endsection
 
 @section('konten')

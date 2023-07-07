@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 // Jenis
@@ -37,9 +37,13 @@ Route::resource('produk', ProdukController::class);
 Route::post('produk/getEditForm', [ProdukController::class, 'getEditForm'])->name('produk.getEditForm');
 Route::post('produk/getShowModal', [ProdukController::class, 'getShowModal'])->name('produk.getShowModal');
 
+// Keranjang
+Route::get('order/keranjang', [OrderController::class, 'keranjang'])->name('order.keranjang');
+
 // Order
-Route::resource('order', OrderController::class);
 Route::get('order/riwayat-transaksi', [OrderController::class, 'riwayatTransaksi'])->name('order.transaksi');
+Route::resource('order', OrderController::class);
 
 // Member
-Route::resource('order', OrderController::class);
+Route::resource('member', MemberController::class);
+
