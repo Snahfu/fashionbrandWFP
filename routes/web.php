@@ -47,3 +47,7 @@ Route::resource('order', OrderController::class);
 // Member
 Route::resource('member', MemberController::class);
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
