@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProdukController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,3 +36,10 @@ Route::post('kategori/saveDataField', [KategoriController::class, 'saveDataField
 Route::resource('produk', ProdukController::class);
 Route::post('produk/getEditForm', [ProdukController::class, 'getEditForm'])->name('produk.getEditForm');
 Route::post('produk/getShowModal', [ProdukController::class, 'getShowModal'])->name('produk.getShowModal');
+
+// Order
+Route::resource('order', OrderController::class);
+Route::get('order/riwayat-transaksi', [OrderController::class, 'riwayatTransaksi'])->name('order.transaksi');
+
+// Member
+Route::resource('order', OrderController::class);
