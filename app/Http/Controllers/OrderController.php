@@ -110,7 +110,7 @@ class OrderController extends Controller
             $order->save();
             $order_id = $order->id;
 
-            $user->poin -= $poin_dipakai;
+            $user->poin -= $poin_dipakai + $poin_didapat;
             $user->save();
 
             $produks = [];
