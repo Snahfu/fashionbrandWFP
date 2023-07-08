@@ -11,6 +11,10 @@ class Jenis extends Model
     use HasFactory;
     use SoftDeletes;
     protected $table = 'jenises';
+    protected $fillable = [
+        'nama',
+        'deskripsi',
+    ];
 
     public function produks() {
         return $this->hasMany(Produk::class);

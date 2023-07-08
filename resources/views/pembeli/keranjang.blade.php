@@ -61,6 +61,13 @@ Keranjang
     </div>
 </div>
 
+<button class="btn btn-primary" id="btnCheckout">Checkout</button>
+
+<div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="modalContent"></div>
+    </div>
+</div>
 
 @endsection
 

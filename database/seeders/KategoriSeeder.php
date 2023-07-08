@@ -11,8 +11,8 @@ class KategoriSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run($path, $model)
     {
-        //
+        include("csv-reader.php");
     }
 }

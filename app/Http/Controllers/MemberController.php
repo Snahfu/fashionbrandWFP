@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MemberController extends Controller
 {
@@ -13,12 +15,10 @@ class MemberController extends Controller
      */
     public function index()
     {
-        
+        $members = User::where('role', 'member')->get();
         // Logic ambil semua member
-        return view('admin.member.index');
+        return view('admin.member.index', compact('members'));
     }
-
-    public
 
     /**
      * Show the form for creating a new resource.
@@ -28,8 +28,14 @@ class MemberController extends Controller
     public function create()
     {
         // Logic ambil semua pembeli yang sudah beli dan belum menjadi member
+        $pembelis = DB::table('users')
+        ->join('orders', 'users.id', '=', 'orders.user_id')
+        ->select('users.id', 'users.nama', 'users.email')
+        ->where('users.member', 0)
+        ->distinct('users.id')
+        ->get();
 
-        return view('admin.member.create');
+        return view('admin.member.create', compact('pembelis'));
     }
 
     /**

@@ -19,9 +19,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::middleware(['auth'])->group(function () {
+
+
 Route::get('/', function () {
     return view('index');
 });
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Jenis
 Route::resource('jenis', JenisController::class);
@@ -41,6 +46,9 @@ Route::post('produk/getShowModal', [ProdukController::class, 'getShowModal'])->n
 // Keranjang
 Route::get('order/keranjang', [OrderController::class, 'keranjang'])->name('order.keranjang');
 
+// Checkout
+Route::get('order/checkout',[OrderController::class,'checkout'])->name('order.checkout');
+
 // Order
 Route::get('order/riwayat-transaksi', [OrderController::class, 'riwayatTransaksi'])->name('order.transaksi');
 Route::resource('order', OrderController::class);
@@ -48,7 +56,7 @@ Route::resource('order', OrderController::class);
 // Member
 Route::resource('member', MemberController::class);
 
+});
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

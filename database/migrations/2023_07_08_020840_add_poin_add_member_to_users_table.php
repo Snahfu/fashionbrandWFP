@@ -14,8 +14,8 @@ class AddPoinAddMemberToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('poin');
-            $table->boolean('member');
+            $table->integer('poin')->default(0);
+            $table->boolean('member')->default(false);
         });
     }
 

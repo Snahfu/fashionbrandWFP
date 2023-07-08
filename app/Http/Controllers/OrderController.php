@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -20,22 +21,33 @@ class OrderController extends Controller
         return view('pembeli.keranjang');
     }
 
-    public function riwayatTransaksi($userId){
+    public function riwayatTransaksi(){
+        $userId = Auth::user()->id; 
         $history = Order::where("user_id", $userId)->get();
         return view("pembeli.transaksi", ['riwayats'=> $history]);
     }
 
-    public function checkoutPage($userId){
+    public function checkout(){
         // Ambil user login dulu
-        $userPoin = User::find($userId);
-        return view("pembeli.checkout", ['poin'=> $userPoin]);
+        $user = Auth::user();
+        return view("pembeli.checkout", ['user'=> $user])->render();
     }
 
-    public function redemptionPoin(Request $request){
-        $user = User::find($request->get('userid'));
-        // Sebelum di pajak
-        $subTotal = $request->get('subtotal');
+    public function checkoutProcess(Request $request){
+        $user = User::find(Auth::user()->id);
+
+        $subTotal = 0;
         $pesan = "Berhasil mengkonversikan poin";
+        $cart = session("cart");
+        
+        // Kalau cart kosong
+        if(!$cart){
+            $pesan = "Silahkan memasukan barang ke keranjang terlebih dahulu!";
+            return response()->json(array(
+                "status" => "failure",
+                "pesan" => $pesan
+            ));
+        }
 
         // Bukan Member
         if($user->member){
@@ -46,6 +58,12 @@ class OrderController extends Controller
             ));
         }
 
+        // Hitung subtotal
+        foreach($cart as $key => $product){
+            $temporaryTotal = $product["quantity"] * $product["price"];
+            $subTotal += $temporaryTotal;
+        }
+
         // Subtotal kurang dari 100rb
         if($subTotal < 100000){
             $pesan = "Untuk menggunakan poin silahkan melakukan belanja lebih!";
@@ -54,6 +72,28 @@ class OrderController extends Controller
                 "pesan" => $pesan
             ));
         }
+
+
+        $order = new Order();
+        $order->user_id = Auth::user()->id;
+        $order->subtotal = 0;
+        $order->pajak = 0;
+        $order->potongan = 0;
+        $order->total = 0;
+        $order->poin_didapat = 0;
+        $order->save();
+
+        foreach($cart as $key => $product){
+            $temporaryTotal = $product["quantity"] * $product["price"];
+            $order->produks()->attach($key, [
+                "kuantitas" => $product["quantity"],
+                "harga" => $product["price"],
+                "subtotal" => $temporaryTotal
+            ]);
+            $subTotal += $temporaryTotal;
+        }
+        // Hitung SubTotal, Total, Pajak, Pemotongan
+        
 
         return response()->json(array(
             "status" => "success",

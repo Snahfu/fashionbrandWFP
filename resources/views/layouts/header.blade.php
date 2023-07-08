@@ -109,10 +109,18 @@
                     <span class="user-icon">
                         <img src="{{ asset('assets/vendors/images/photo1.jpg') }}" alt="">
                     </span>
-                    <span class="user-name">Ross C. Lopez</span>
+                    <span class="user-name">{{ Auth::user()->name }}</span>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                    <a class="dropdown-item" href="/"><i class="dw dw-logout"></i> Log Out</a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </div>
             </div>
         </div>
