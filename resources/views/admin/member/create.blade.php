@@ -23,14 +23,16 @@ Tambah Member
                 </tr>
             </thead>
             <tbody>
+                @foreach ($pembelis as $pembeli)
                 <tr>
-                    <th scope="row">1</th>
-                    <td class="editable" id="">A</td>
-                    <td class="editable" id="">A</td>
+                    <th scope="row">{{ $pembeli->id }}</th>
+                    <td class="editable" id=""> {{ $pembeli->name }} </td>
+                    <td class="editable" id="">{{ $pembeli->email }}</td>
                     <td>
                         <button class="btn btn-success btn-sm" style="display: inline-block">Jadikan Member</button>
                     </td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

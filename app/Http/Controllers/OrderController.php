@@ -19,7 +19,7 @@ class OrderController extends Controller
 
     public function keranjang()
     {
-        return view('pembeli.keranjang');
+        return view('pembeli.order.keranjang');
     }
 
     public function riwayatTransaksi()
@@ -52,7 +52,7 @@ class OrderController extends Controller
     {
         // Ambil user login dulu
         $user = Auth::user();
-        return view("pembeli.checkout", ['user' => $user])->render();
+        return view("pembeli.order.checkout", ['user' => $user])->render();
     }
 
     public function checkoutProcess(Request $request)

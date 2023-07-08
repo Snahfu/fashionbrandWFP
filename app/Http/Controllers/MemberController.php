@@ -15,8 +15,8 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $members = User::where('role', 'member')->get();
         // Logic ambil semua member
+        $members = User::where('role', 'pembeli')->where('member', 1)->get();
         return view('admin.member.index', compact('members'));
     }
 
@@ -27,20 +27,21 @@ class MemberController extends Controller
      */
     public function create()
     {
+        // Logic ambil semua pembeli yang sudah beli dan belum menjadi member
+        $pembelis = DB::table('users')
+        ->join('orders', 'users.id', '=', 'orders.user_id')
+        ->select('users.id', 'users.name', 'users.email')
+        ->where('users.role', 'pembeli')
+        ->where('users.member', 0)
+        ->distinct('users.id')
+        ->get();
 
+        return view('admin.member.create', compact('pembelis'));
     }
 
     public function pembeliBecomeMemberList()
     {
-        // Logic ambil semua pembeli yang sudah beli dan belum menjadi member
-        $pembelis = DB::table('users')
-            ->join('orders', 'users.id', '=', 'orders.user_id')
-            ->select('users.id', 'users.nama', 'users.email')
-            ->where('users.member', 0)
-            ->distinct('users.id')
-            ->get();
-
-        return view('admin.member.create', compact('pembelis'));
+        
     }
 
     /**

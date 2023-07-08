@@ -12,8 +12,11 @@ Produk
                 <div class="title" style="display: inline-block">
                     <h4>Product</h4>
                 </div>
+                {{-- Owner, Staff --}}
+                @canany(['owner-only', 'staff-only'])
                 <a class="btn btn-success btn-sm ml-2" href="#modalCreate" data-toggle="modal"
                     style="display: inline-block">+</a>
+                @endcan
             </div>
         </div>
     </div>
@@ -54,7 +57,7 @@ Produk
                     <a href="#" class="btn btn-outline-primary prev"><i class="fa fa-angle-double-left"></i></a>
                     <span class="btn btn-primary current">1</span>
                     <a href="#" class="btn btn-outline-primary">2</a>
-                    <a href="#" class="btn btn-outline-primary">3A</a>
+                    <a href="#" class="btn btn-outline-primary">3</a>
                     <a href="#" class="btn btn-outline-primary">4</a>
                     <a href="#" class="btn btn-outline-primary">5</a>
                     <a href="#" class="btn btn-outline-primary next"><i class="fa fa-angle-double-right"></i></a>

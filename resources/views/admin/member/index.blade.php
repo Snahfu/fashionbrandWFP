@@ -23,14 +23,16 @@ Lihat Member
                 </tr>
             </thead>
             <tbody>
+                @foreach ($members as $member)
                 <tr>
-                    <th scope="row">1</th>
-                    <td class="editable" id="">A</td>
-                    <td class="editable" id="">A</td>
+                    <th scope="row">{{ $member->id }}</th>
+                    <td class="editable" id=""> {{ $member->name }} </td>
+                    <td class="editable" id="">{{ $member->email }}</td>
                     <td>
                         <button class="btn btn-danger btn-sm" style="display: inline-block">Hapus Membership</button>
                     </td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

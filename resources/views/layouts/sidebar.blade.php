@@ -57,7 +57,7 @@
                         <ul class="submenu">
                             {{-- Owner, Staff --}}
                             @canany(['owner-only', 'staff-only'])    
-                                <li><a href="{{ route('member.index') }}">Semua Memberlist</a></li>
+                                <li><a href="{{ route('member.index') }}">List Member</a></li>
                             @endcan
                             {{-- Owner --}}
                             @can('owner-only')
