@@ -20,6 +20,7 @@ class OrderController extends Controller
     public function keranjang()
     {
         $carts = session()->get("cart");
+        dd($carts);
         return view('pembeli.order.keranjang', compact('carts'));
     }
 
