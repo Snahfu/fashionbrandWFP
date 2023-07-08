@@ -69,7 +69,7 @@
                 {{-- Owner, Staff --}}
                 @canany(['owner-only', 'staff-only'])    
                     <li>
-                        <a href="{{ route('order.alltransaksi') }}" class="dropdown-toggle no-arrow">
+                        <a href="{{ route('order.all') }}" class="dropdown-toggle no-arrow">
                             <span class="micon fa fa-plus-square-o"></span><span class="mtext">Detail Order</span>
                         </a>
                     </li>

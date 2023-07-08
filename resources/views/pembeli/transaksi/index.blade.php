@@ -17,6 +17,9 @@ Riwayat Transaksi
             <thead>
                 <tr>
                     <th scope="col">Order ID</th>
+                    @canany(['owner-only', 'staff-only'])
+                    <th scope="col">Pembeli ID</th>
+                    @endcan
                     <th scope="col">Subtotal</th>
                     <th scope="col">Pajak</th>
                     <th scope="col">Potongan</th>
@@ -30,6 +33,9 @@ Riwayat Transaksi
                 @foreach ($riwayats as $riwayat)
                     <tr>
                         <td>{{ $riwayat->id }}</td>
+                        @canany(['owner-only', 'staff-only'])
+                        <td>{{ $riwayat->user_id }}</td>
+                        @endcan
                         <td>{{ $riwayat->subtotal }}</td>
                         <td>{{ $riwayat->pajak }}</td>
                         <td>{{ $riwayat->potongan }}</td>

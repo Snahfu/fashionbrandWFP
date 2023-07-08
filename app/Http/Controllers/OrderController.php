@@ -22,10 +22,16 @@ class OrderController extends Controller
         return view('pembeli.order.keranjang');
     }
 
+    public function riwayatSemuaTransaksi()
+    {
+        $riwayats = Order::orderBy('created_at')->get();
+        return view("pembeli.transaksi.index", compact('riwayats'));
+    }
+    
     public function riwayatTransaksi()
     {
         $userId = Auth::user()->id;
-        $riwayats = Order::where("user_id", $userId)->get();
+        $riwayats = Order::where("user_id", $userId)->orderBy('created_at', 'DESC')->get();
         return view("pembeli.transaksi.index", compact('riwayats'));
     }
 
@@ -40,12 +46,6 @@ class OrderController extends Controller
             ->get();
 
         return view("pembeli.transaksi.detail", compact('orders', 'orderId'));
-    }
-
-    public function riwayatSemuaOrder()
-    {
-        $riwayats = Order::orderBy('created_at')->get();
-        return view("admin.order.index", compact('riwayats'));
     }
 
     public function checkout()

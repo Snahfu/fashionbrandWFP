@@ -50,9 +50,9 @@ Route::get('order/keranjang', [OrderController::class, 'keranjang'])->name('orde
 Route::get('order/checkout',[OrderController::class,'checkout'])->name('order.checkout');
 
 // Order
-Route::get('order/riwayat-transaksi', [OrderController::class, 'riwayatTransaksi'])->name('order.transaksi');
+Route::get('order/riwayat-transaksi', [OrderController::class, 'riwayatSemuaTransaksi'])->name('order.all');
+Route::get('order/riwayat-transaksi/user', [OrderController::class, 'riwayatTransaksi'])->name('order.transaksi');
 Route::get('order/riwayat-transaksi/detail/{order_id}', [OrderController::class, 'riwayatTransaksiDetail'])->name('order.transaksi.detail');
-Route::get('order/riwayat-transaksi-owner', [OrderController::class, 'riwayatSemuaOrder'])->name('order.alltransaksi');
 Route::resource('order', OrderController::class);
 
 // Member
