@@ -19,7 +19,8 @@ class OrderController extends Controller
 
     public function keranjang()
     {
-        return view('pembeli.order.keranjang');
+        $carts = session()->get("cart");
+        return view('pembeli.order.keranjang', compact('carts'));
     }
 
     public function riwayatSemuaTransaksi()
@@ -27,7 +28,7 @@ class OrderController extends Controller
         $riwayats = Order::orderBy('created_at')->get();
         return view("pembeli.transaksi.index", compact('riwayats'));
     }
-    
+
     public function riwayatTransaksi()
     {
         $userId = Auth::user()->id;

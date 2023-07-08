@@ -39,6 +39,17 @@ Keranjang
                 </tr>
             </thead>
             <tbody>
+                @if(carts)
+                @php
+                $subtotal = 0;
+                @endphp
+                @foreach ($carts as $c)
+                @php
+                    $subtotal += $c["quantity"] * $c
+                @endphp    
+                @endforeach
+                @endif
+
                 <tr>
                     <th scope="row">1</th>
                     <td class="editable" id="">

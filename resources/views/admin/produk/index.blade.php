@@ -32,6 +32,7 @@ Produk
                             <div class="price">
                                 <ins style="margin: 0">Rp. {{ $produk->harga }}</ins>
                             </div>
+                            @can('pembeli-only')
                             <a href="#modalShow" data-toggle="modal" class="btn btn-outline-primary"
                                 onclick="getShowModal({{ $produk->id }}) ">Selengkapnya</a>
                             {{-- <form style="display: inline-block" action="{{ route('produk.destroy', $produk->id) }}"
@@ -41,10 +42,13 @@ Produk
                                 <input id="btndelete" type="submit" value="Delete" class="btn btn-outline-danger"
                                     data-confirm-delete="true">
                             </form> --}}
+                            @endcan
+                            @canany(['owner-only', 'staff-only'])
                             <a class="btn btn-outline-info" href="#modalUpdate" data-toggle="modal"
                                 onclick="getEditForm({{ $produk->id }})">Ubah</a>
                             <a id="btndelete" href="{{ route('produk.destroy', $produk->id) }}"
                                 class="btn btn-outline-danger" data-confirm-delete="true">Hapus</a>
+                            @endcan
                         </div>
                     </div>
                 </li>
@@ -67,6 +71,7 @@ Produk
     </div>
 </div>
 
+@canany(['owner-only', 'staff-only'])
 <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -151,7 +156,9 @@ Produk
         <div class="modal-content" id="modalContent"></div>
     </div>
 </div>
+@endcan
 
+@can('pembeli-only')
 <div class="modal fade" id="modalShow" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content" id="contentShow">
@@ -170,6 +177,7 @@ Produk
         </div>
     </div>
 </div>
+@endcan
 @endsection
 
 @section('javascript')
@@ -226,22 +234,17 @@ Produk
 
     function addToCart(produk_id) {
         var qty_produk = $('#qty_produk_cart').val()
-        
-        alert(produk_id)
-        alert(qty_produk)
 
         // Tambahkan session di sini
         $('#modalShow').modal('hide');
-    }
 
-    function ajaxTambahCart(){
         $.ajax({
                 type:'POST',
                 url:'{{ route("produk.addCart") }}',
                 data:{
                     '_token':'<?php echo csrf_token() ?>',
-                    'produk_id': 1, //produk_id
-                    'quantity': 1, //quantity
+                    'produk_id': produk_id, //produk_id
+                    'quantity': qty_produk, //quantity
                 },
                 success: function(data){
                     alert(data.msg);
