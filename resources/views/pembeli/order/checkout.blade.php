@@ -44,10 +44,8 @@
         <div class="text-right">
             <p>Subtotal barang: Rp<b id="subtotal">{{ $total }}</b></p>
             <p>PPN (11%): Rp<b id="pajak">{{ $pajak }}</b></p>
-            @if($user->member == 1 && $poin > 0 && $total >= 100000)
-            <p>Pakai poin: <input type="checkbox" id="check" onclick="check()"> <label for="check"><b
+            <p>Pakai poin: <input type="checkbox" id="check" onclick="check()" @if(!($user->member == 1 && $poin > 0 && $total >= 100000)) disabled @endif> <label for="check"><b
                         id="poin_dipakai">{{$user->poin }}</b> (Rp{{ $poin }})</label></p>
-            @endif
             <hr>
             <p>Total bayar: Rp<b id="total">{{ $total+$pajak }}</b></p>
             <p>Poin yang didapat: <b id="poin_didapat">{{ $poin_didapat }}</b> (Rp{{
