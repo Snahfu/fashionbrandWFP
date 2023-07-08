@@ -23,14 +23,16 @@ Detail Order
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td class="editable" id="">A</td>
-                    <td class="editable" id="">A</td>
-                    <td>
-                        <button class="btn btn-success btn-sm" style="display: inline-block">Lihat Detail</button>
-                    </td>
-                </tr>
+                @foreach ($riwayats as $riwayat)    
+                    <tr>
+                        <th scope="row"> {{ $riwayat->id }}</th>
+                        <td class="editable" id=""> {{ $riwayat->user->name }} </td>
+                        <td class="editable" id=""> {{ $riwayat->created_at }}</td>
+                        <td>
+                            <button class="btn btn-success btn-sm" style="display: inline-block">Lihat Detail</button>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

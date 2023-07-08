@@ -13,4 +13,8 @@ class Order extends Model
         return $this->belongsToMany(Produk::class)
         ->withPivot('kuantitas','harga','subtotal');
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

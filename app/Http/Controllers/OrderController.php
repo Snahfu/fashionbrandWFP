@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -23,8 +24,23 @@ class OrderController extends Controller
 
     public function riwayatTransaksi(){
         $userId = Auth::user()->id; 
-        $history = Order::where("user_id", $userId)->get();
-        return view("pembeli.transaksi", ['riwayats'=> $history]);
+        $riwayats = Order::where("user_id", $userId)->get();
+        return view("pembeli.transaksi.index", compact('riwayats'));
+    }
+
+    public function riwayatTransaksiDetail(Request $request){
+        $orderId = $request['order_id'];
+        $orders = DB::table('order_produk')
+            ->join('produks', 'order_produk.produk_id', '=', 'produks.id')
+            ->where('order_produk.order_id', $orderId )
+            ->get();
+        dd($orders);
+        return view("pembeli.transaksi.index", compact('order'));
+    }
+
+    public function riwayatSemuaOrder(){ 
+        $riwayats = Order::all();
+        return view("admin.order.index", compact('riwayats'));
     }
 
     public function checkout(){
