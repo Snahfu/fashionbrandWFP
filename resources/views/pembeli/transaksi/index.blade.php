@@ -37,7 +37,7 @@ Riwayat Transaksi
                         <td>{{ $riwayat->poin_didapat }}</td>
                         <td>{{ $riwayat->created_at }}</td>
                         <td>
-                            <a href="{{ route() }}" class="btn btn-success btn-sm" style="display: inline-block">Lihat Detail</a>
+                            <a href="{{ route('order.transaksi.detail', ['order_id' => $riwayat->id]) }}" class="btn btn-success btn-sm" style="display: inline-block">Lihat Detail</a>
                         </td>
                     </tr>
                 @endforeach

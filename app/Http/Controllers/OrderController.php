@@ -22,42 +22,49 @@ class OrderController extends Controller
         return view('pembeli.keranjang');
     }
 
-    public function riwayatTransaksi(){
-        $userId = Auth::user()->id; 
+    public function riwayatTransaksi()
+    {
+        $userId = Auth::user()->id;
         $riwayats = Order::where("user_id", $userId)->get();
         return view("pembeli.transaksi.index", compact('riwayats'));
     }
 
-    public function riwayatTransaksiDetail(Request $request){
+    public function riwayatTransaksiDetail(Request $request)
+    {
         $orderId = $request['order_id'];
+        // dd($orderId);
         $orders = DB::table('order_produk')
             ->join('produks', 'order_produk.produk_id', '=', 'produks.id')
-            ->where('order_produk.order_id', $orderId )
+            ->select('produks.url_gambar', 'produks.nama_produk', 'order_produk.kuantitas', 'order_produk.harga', 'order_produk.subtotal')
+            ->where('order_produk.order_id', $orderId)
             ->get();
-        dd($orders);
-        return view("pembeli.transaksi.index", compact('order'));
+
+        return view("pembeli.transaksi.detail", compact('orders', 'orderId'));
     }
 
-    public function riwayatSemuaOrder(){ 
-        $riwayats = Order::all();
+    public function riwayatSemuaOrder()
+    {
+        $riwayats = Order::orderBy('created_at')->get();
         return view("admin.order.index", compact('riwayats'));
     }
 
-    public function checkout(){
+    public function checkout()
+    {
         // Ambil user login dulu
         $user = Auth::user();
-        return view("pembeli.checkout", ['user'=> $user])->render();
+        return view("pembeli.checkout", ['user' => $user])->render();
     }
 
-    public function checkoutProcess(Request $request){
+    public function checkoutProcess(Request $request)
+    {
         $user = User::find(Auth::user()->id);
 
         $subTotal = 0;
         $pesan = "Berhasil mengkonversikan poin";
         $cart = session("cart");
-        
+
         // Kalau cart kosong
-        if(!$cart){
+        if (!$cart) {
             $pesan = "Silahkan memasukan barang ke keranjang terlebih dahulu!";
             return response()->json(array(
                 "status" => "failure",
@@ -66,7 +73,7 @@ class OrderController extends Controller
         }
 
         // Bukan Member
-        if($user->member){
+        if ($user->member) {
             $pesan = "Anda bukan member";
             return response()->json(array(
                 "status" => "failure",
@@ -75,13 +82,13 @@ class OrderController extends Controller
         }
 
         // Hitung subtotal
-        foreach($cart as $key => $product){
+        foreach ($cart as $key => $product) {
             $temporaryTotal = $product["quantity"] * $product["price"];
             $subTotal += $temporaryTotal;
         }
 
         // Subtotal kurang dari 100rb
-        if($subTotal < 100000){
+        if ($subTotal < 100000) {
             $pesan = "Untuk menggunakan poin silahkan melakukan belanja lebih!";
             return response()->json(array(
                 "status" => "failure",
@@ -99,7 +106,7 @@ class OrderController extends Controller
         $order->poin_didapat = 0;
         $order->save();
 
-        foreach($cart as $key => $product){
+        foreach ($cart as $key => $product) {
             $temporaryTotal = $product["quantity"] * $product["price"];
             $order->produks()->attach($key, [
                 "kuantitas" => $product["quantity"],
@@ -109,7 +116,7 @@ class OrderController extends Controller
             $subTotal += $temporaryTotal;
         }
         // Hitung SubTotal, Total, Pajak, Pemotongan
-        
+
 
         return response()->json(array(
             "status" => "success",

@@ -12,7 +12,8 @@ Produk
                 <div class="title" style="display: inline-block">
                     <h4>Product</h4>
                 </div>
-                <a class="btn btn-success btn-sm ml-2" href="#modalCreate" data-toggle="modal" style="display: inline-block">+</a>
+                <a class="btn btn-success btn-sm ml-2" href="#modalCreate" data-toggle="modal"
+                    style="display: inline-block">+</a>
             </div>
         </div>
     </div>
@@ -20,25 +21,30 @@ Produk
         <div class="product-list">
             <ul class="row" id="catalog">
                 @foreach ($produks as $produk)
-                    <li class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="product-box">
-                            <div class="producct-img"><img src="{{ asset('images/'.$produk->url_gambar) }}" alt=""></div>
-                            <div class="product-caption">
-                                <h4><a href="#">{{ $produk->nama_produk }}</a></h4>
-                                <div class="price">
-                                    <ins style="margin: 0">Rp. {{ $produk->harga }}</ins>
-                                </div>
-                                <a href="#modalShow" data-toggle="modal" class="btn btn-outline-primary" onclick="getShowModal({{ $produk->id }}) ">Selengkapnya</a>
-                                {{-- <form style="display: inline-block" action="{{ route('produk.destroy', $produk->id) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input id="btndelete" type="submit" value="Delete" class="btn btn-outline-danger" data-confirm-delete="true">
-                                </form> --}}
-                                <a class="btn btn-outline-info" href="#modalUpdate" data-toggle="modal" onclick="getEditForm({{ $produk->id }})">Ubah</a>
-                                <a id="btndelete" href="{{ route('produk.destroy', $produk->id) }}" class="btn btn-outline-danger" data-confirm-delete="true">Hapus</a>
+                <li class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="product-box">
+                        <div class="producct-img"><img src="{{ asset('images/'.$produk->url_gambar) }}" alt=""></div>
+                        <div class="product-caption">
+                            <h4><a href="#">{{ $produk->nama_produk }}</a></h4>
+                            <div class="price">
+                                <ins style="margin: 0">Rp. {{ $produk->harga }}</ins>
                             </div>
+                            <a href="#modalShow" data-toggle="modal" class="btn btn-outline-primary"
+                                onclick="getShowModal({{ $produk->id }}) ">Selengkapnya</a>
+                            {{-- <form style="display: inline-block" action="{{ route('produk.destroy', $produk->id) }}"
+                                method="post">
+                                @csrf
+                                @method('DELETE')
+                                <input id="btndelete" type="submit" value="Delete" class="btn btn-outline-danger"
+                                    data-confirm-delete="true">
+                            </form> --}}
+                            <a class="btn btn-outline-info" href="#modalUpdate" data-toggle="modal"
+                                onclick="getEditForm({{ $produk->id }})">Ubah</a>
+                            <a id="btndelete" href="{{ route('produk.destroy', $produk->id) }}"
+                                class="btn btn-outline-danger" data-confirm-delete="true">Hapus</a>
                         </div>
-                    </li>
+                    </div>
+                </li>
                 @endforeach
             </ul>
         </div>
@@ -46,9 +52,9 @@ Produk
             <div class="btn-toolbar justify-content-center mb-15">
                 <div class="btn-group">
                     <a href="#" class="btn btn-outline-primary prev"><i class="fa fa-angle-double-left"></i></a>
-                    <a href="#" class="btn btn-outline-primary">1</a>
+                    <span class="btn btn-primary current">1</span>
                     <a href="#" class="btn btn-outline-primary">2</a>
-                    <span class="btn btn-primary current">3</span>
+                    <a href="#" class="btn btn-outline-primary">3A</a>
                     <a href="#" class="btn btn-outline-primary">4</a>
                     <a href="#" class="btn btn-outline-primary">5</a>
                     <a href="#" class="btn btn-outline-primary next"><i class="fa fa-angle-double-right"></i></a>
@@ -74,31 +80,36 @@ Produk
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">Nama</label>
                         <div class="col-sm-12 col-md-10">
-                            <input class="form-control" type="text" placeholder="Nama" name="namaproduk" id="namaproduk" autofocus required>
+                            <input class="form-control" type="text" placeholder="Nama" name="namaproduk" id="namaproduk"
+                                autofocus required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">Brand</label>
                         <div class="col-sm-12 col-md-10">
-                            <input class="form-control" type="text" placeholder="Brand" name="brandproduk" id="brandproduk" required>
+                            <input class="form-control" type="text" placeholder="Brand" name="brandproduk"
+                                id="brandproduk" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">Harga</label>
                         <div class="col-sm-12 col-md-10">
-                            <input class="form-control" type="number" placeholder="Harga" name="hargaproduk" id="hargaproduk" step=".01" required>
+                            <input class="form-control" type="number" placeholder="Harga" name="hargaproduk"
+                                id="hargaproduk" step=".01" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">Dimensi</label>
                         <div class="col-sm-12 col-md-10">
-                            <input class="form-control" type="text" placeholder="Dimensi" name="dimensiproduk" id="dimensiproduk" required>
+                            <input class="form-control" type="text" placeholder="Dimensi" name="dimensiproduk"
+                                id="dimensiproduk" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">Gambar</label>
                         <div class="col-sm-12 col-md-10">
-                            <input type="file" class="form-control-file form-control height-auto" name="gambarproduk" id="gambarproduk" required>
+                            <input type="file" class="form-control-file form-control height-auto" name="gambarproduk"
+                                id="gambarproduk" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -107,7 +118,7 @@ Produk
                             <select class="custom-select col-12" name="jenisproduk" id="jenisproduk" required>
                                 <option value="">Choose...</option>
                                 @foreach ($jenises as $jenis)
-                                    <option value="{{ $jenis->id }}">{{ $jenis->nama }}</option>
+                                <option value="{{ $jenis->id }}">{{ $jenis->nama }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -115,9 +126,10 @@ Produk
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">Kategori</label>
                         <div class="col-sm-12 col-md-10">
-                            <select class="selectpicker" multiple data-live-search="true" name="namaproduk[]" id="namaproduk" required>
+                            <select class="selectpicker" multiple data-live-search="true" name="namaproduk[]"
+                                id="namaproduk" required>
                                 @foreach ($kategoris as $kategori)
-                                    <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                                <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -144,9 +156,12 @@ Produk
                 <img class="card-img-top" src="{{ asset('images/1688233951_sepatuu.jpg') }}">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <small><b><a href="#" style="pointer-events: none; cursor: default;" class="card-link text-muted">aaaaa</a></b></small>
-                    <small><b><a href="#" style="pointer-events: none; cursor: default;" class="card-link text-muted ml-3">bbbbb, ccccc, ddddd</a></b></small>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                        additional content. This content is a little bit longer.</p>
+                    <small><b><a href="#" style="pointer-events: none; cursor: default;"
+                                class="card-link text-muted">aaaaa</a></b></small>
+                    <small><b><a href="#" style="pointer-events: none; cursor: default;"
+                                class="card-link text-muted ml-3">bbbbb, ccccc, ddddd</a></b></small>
                 </div>
             </div> --}}
         </div>

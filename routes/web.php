@@ -51,6 +51,7 @@ Route::get('order/checkout',[OrderController::class,'checkout'])->name('order.ch
 
 // Order
 Route::get('order/riwayat-transaksi', [OrderController::class, 'riwayatTransaksi'])->name('order.transaksi');
+Route::get('order/riwayat-transaksi/detail/{order_id}', [OrderController::class, 'riwayatTransaksiDetail'])->name('order.transaksi.detail');
 Route::get('order/riwayat-transaksi-owner', [OrderController::class, 'riwayatSemuaOrder'])->name('order.alltransaksi');
 Route::resource('order', OrderController::class);
 
