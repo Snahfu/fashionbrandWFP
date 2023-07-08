@@ -6,13 +6,13 @@ Keranjang
 
 @section('style')
 <style>
-    .img-product{
-        max-width:120px;
-        max-height:100px;
+    .img-product {
+        max-width: 120px;
+        max-height: 100px;
         height: auto;
-        width:auto;
-        background-repeat:no-repeat;
-        background-size:cover;
+        width: auto;
+        background-repeat: no-repeat;
+        background-size: cover;
     }
 </style>
 @endsection
@@ -53,7 +53,8 @@ Keranjang
                     </td>
                     <td class="editable" id="">A</td>
                     <td>
-                        <button class="btn btn-danger btn-sm" style="display: inline-block">Hapus Produk</button>
+                        <button class="btn btn-danger btn-sm" style="display: inline-block">Hapus dari
+                            keranjang</button>
                     </td>
                 </tr>
             </tbody>
@@ -63,7 +64,7 @@ Keranjang
 
 <button class="btn btn-primary" id="btnCheckout">Checkout</button>
 
-<div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog">
+<div class="modal fade" id="modalCheckout" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content" id="modalContent"></div>
     </div>
@@ -71,6 +72,54 @@ Keranjang
 
 @endsection
 
-@section('javascript')
+{{-- <table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Gambar</th>
+            <th>Harga</th>
+            <th>Qty</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Anjing 1</td>
+            <td>
+                <img class="img-thumbnail img-product" src="{{ asset('images/'.$produk->url_gambar) }}" alt="">
+            </td>
+            <td>Anjing 1</td>
+            <td>Anjing 1</td>
+        </tr>
+    </tbody>
+</table> --}}
 
+@section('javascript')
+<script>
+    function getCheckoutModal(id) 
+        {
+            $.ajax({
+                type:'POST',
+                url:'{{ route("member.halamancheckout") }}',
+                data:{
+                    '_token':'<?php echo csrf_token() ?>',
+                },
+                success: function(data){
+                    //         $cart[$produk->id] = [
+                    //     "name" => $produk->name,
+                    //     "quantity" => $quantity,
+                    //     "price" => $produk->price,
+                    //     "gambar" => $produk->url_gambar
+                    // ];
+                    if(data.status == "success"){
+                        var cart = data.cart
+                        var temporaryHTML = ""
+
+                    }
+                    else{
+                        $('#modalContent').html(data.msg);
+                    }
+                }
+            });
+        }
+</script>
 @endsection

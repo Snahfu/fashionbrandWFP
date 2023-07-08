@@ -199,4 +199,30 @@ class ProdukController extends Controller
             'msg' => view('admin.produk.show', compact('data', 'kategoris'))->render(),
         ));
     }
+
+    public function tambahKeranjang(Request $request)
+    {
+        $produk = Produk::find($request)->get('produk_id');
+        $quantity = $request->get('quantity');
+        $cart = session()->get("cart");
+        if (!$cart) {
+            $cart = array();
+        }
+        if (!isset($cart[$produk->id])) {
+            $cart[$produk->id] = [
+                "name" => $produk->name,
+                "quantity" => $quantity,
+                "price" => $produk->price,
+                "gambar" => $produk->url_gambar
+            ];
+        } else {
+            $cart[$produk->id]["quantity"] += $quantity;
+        }
+        session()->put("cart", $cart);
+
+        return response()->json([
+            "status" => "success",
+            "msg" => "Berhasil menambahkan produk $produk->name ke cart",
+        ]);
+    }
 }

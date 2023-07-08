@@ -29,14 +29,33 @@ class MemberController extends Controller
     {
         // Logic ambil semua pembeli yang sudah beli dan belum menjadi member
         $pembelis = DB::table('users')
-        ->join('orders', 'users.id', '=', 'orders.user_id')
-        ->select('users.id', 'users.name', 'users.email')
-        ->where('users.role', 'pembeli')
-        ->where('users.member', 0)
-        ->distinct('users.id')
-        ->get();
+            ->join('orders', 'users.id', '=', 'orders.user_id')
+            ->select('users.id', 'users.name', 'users.email')
+            ->where('users.role', 'pembeli')
+            ->where('users.member', 0)
+            ->distinct('users.id')
+            ->get();
 
         return view('admin.member.create', compact('pembelis'));
+    }
+
+    public function ambilKeranjang(Request $request)
+    {
+        // Ambil cart
+        $pesan = "Berhasil mengambil data keranjang";
+        $cart = session("cart");
+        if (!$cart) {
+            $pesan = "Silahkan memasukan barang ke keranjang terlebih dahulu!";
+            return response()->json(array(
+                "status" => "failure",
+                "pesan" => $pesan
+            ));
+        }
+        return response()->json(array(
+            "status" => "failure",
+            "pesan" => $pesan,
+            "cart" => $cart
+        ));
     }
 
     /**
@@ -81,10 +100,10 @@ class MemberController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
     }
 
-    public function updateMembership(Request $request){
+    public function updateMembership(Request $request)
+    {
         $user = User::find($request['user_id']);
         $user->member = $request['membership_status'];
         $user->update();

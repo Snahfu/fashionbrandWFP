@@ -22,44 +22,44 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->group(function () {
 
 
-Route::get('/', function () {
-    return view('index');
-});
+    Route::get('/', function () {
+        return view('index');
+    });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Jenis
-Route::resource('jenis', JenisController::class);
-Route::post('jenis/getEditForm', [JenisController::class, 'getEditForm'])->name('jenis.getEditForm');
-Route::post('jenis/saveDataField', [JenisController::class, 'saveDataField'])->name('jenis.saveDataField');
+    // Jenis
+    Route::resource('jenis', JenisController::class);
+    Route::post('jenis/getEditForm', [JenisController::class, 'getEditForm'])->name('jenis.getEditForm');
+    Route::post('jenis/saveDataField', [JenisController::class, 'saveDataField'])->name('jenis.saveDataField');
 
-// Kategori
-Route::resource('kategori', KategoriController::class);
-Route::post('kategori/getEditForm', [KategoriController::class, 'getEditForm'])->name('kategori.getEditForm');
-Route::post('kategori/saveDataField', [KategoriController::class, 'saveDataField'])->name('kategori.saveDataField');
+    // Kategori
+    Route::resource('kategori', KategoriController::class);
+    Route::post('kategori/getEditForm', [KategoriController::class, 'getEditForm'])->name('kategori.getEditForm');
+    Route::post('kategori/saveDataField', [KategoriController::class, 'saveDataField'])->name('kategori.saveDataField');
 
-// Produk
-Route::resource('produk', ProdukController::class);
-Route::post('produk/getEditForm', [ProdukController::class, 'getEditForm'])->name('produk.getEditForm');
-Route::post('produk/getShowModal', [ProdukController::class, 'getShowModal'])->name('produk.getShowModal');
+    // Produk
+    Route::resource('produk', ProdukController::class);
+    Route::post('produk/getEditForm', [ProdukController::class, 'getEditForm'])->name('produk.getEditForm');
+    Route::post('produk/getShowModal', [ProdukController::class, 'getShowModal'])->name('produk.getShowModal');
+    Route::post('produk/addCart', [ProdukController::class, 'tambahKeranjang'])->name('produk.addCart');
 
-// Keranjang
-Route::get('order/keranjang', [OrderController::class, 'keranjang'])->name('order.keranjang');
+    // Keranjang
+    Route::get('order/keranjang', [OrderController::class, 'keranjang'])->name('order.keranjang');
 
-// Checkout
-Route::get('order/checkout',[OrderController::class,'checkout'])->name('order.checkout');
+    // Checkout
+    Route::get('order/checkout', [OrderController::class, 'checkout'])->name('order.checkout');
 
-// Order
-Route::get('order/riwayat-transaksi', [OrderController::class, 'riwayatSemuaTransaksi'])->name('order.all');
-Route::get('order/riwayat-transaksi/user', [OrderController::class, 'riwayatTransaksi'])->name('order.transaksi');
-Route::get('order/riwayat-transaksi/detail/{order_id}', [OrderController::class, 'riwayatTransaksiDetail'])->name('order.transaksi.detail');
-Route::resource('order', OrderController::class);
+    // Order
+    Route::get('order/riwayat-transaksi', [OrderController::class, 'riwayatSemuaTransaksi'])->name('order.all');
+    Route::get('order/riwayat-transaksi/user', [OrderController::class, 'riwayatTransaksi'])->name('order.transaksi');
+    Route::get('order/riwayat-transaksi/detail/{order_id}', [OrderController::class, 'riwayatTransaksiDetail'])->name('order.transaksi.detail');
+    Route::resource('order', OrderController::class);
 
-// Member
-Route::resource('member', MemberController::class);
-Route::post('member/update-membership', [MemberController::class, 'updateMembership'])->name('member.membership');
-
+    // Member
+    Route::resource('member', MemberController::class);
+    Route::post('member/halaman-checkout', [MemberController::class, 'ambilKeranjang'])->name('member.halamancheckout');
+    Route::post('member/update-membership', [MemberController::class, 'updateMembership'])->name('member.membership');
 });
 
 Auth::routes();
-

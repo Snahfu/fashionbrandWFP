@@ -221,5 +221,32 @@ Produk
 //         }
 //     })
 // });
+
+    
+
+    function addToCart(produk_id) {
+        var qty_produk = $('#qty_produk_cart').val()
+        
+        alert(produk_id)
+        alert(qty_produk)
+
+        // Tambahkan session di sini
+        $('#modalShow').modal('hide');
+    }
+
+    function ajaxTambahCart(){
+        $.ajax({
+                type:'POST',
+                url:'{{ route("produk.addCart") }}',
+                data:{
+                    '_token':'<?php echo csrf_token() ?>',
+                    'produk_id': 1, //produk_id
+                    'quantity': 1, //quantity
+                },
+                success: function(data){
+                    alert(data.msg);
+                }
+            });
+    }
 </script>
 @endsection
