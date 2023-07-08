@@ -41,7 +41,6 @@ class MemberController extends Controller
 
     public function ambilKeranjang(Request $request)
     {
-        // Ambil cart
         $pesan = "Berhasil mengambil data keranjang";
         $cart = session("cart");
         if (!$cart) {

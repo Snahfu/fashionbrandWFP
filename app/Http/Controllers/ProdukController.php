@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Alert;
 use App\Models\KategoriProduk;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\File;
 
 class ProdukController extends Controller
@@ -208,6 +209,7 @@ class ProdukController extends Controller
         if (!$cart) {
             $cart = array();
         }
+
         if (!isset($cart[$produk->id])) {
             $cart[$produk->id] = [
                 "name" => $produk->nama_produk,
