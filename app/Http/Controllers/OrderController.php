@@ -23,6 +23,35 @@ class OrderController extends Controller
         return view('pembeli.order.keranjang', compact('carts'));
     }
 
+    public function hapusBarang(Request $request)
+    {
+        $id = $request->get('id');
+        $cart = session()->get('cart');
+        unset($cart[$id]);
+        session()->put("cart", $cart);
+
+        return response()->json([
+            "status" => "success",
+            "msg" => "Berhasil menghapus produk dari cart",
+        ]);
+    }
+
+    public function ubahJumlah(Request $request)
+    {
+        $id = $request->get('id');
+        $quantity = $request->get('quantity');
+        $cart = session()->get('cart');
+        $cart[$id]['quantity'] = $quantity;
+        $subtotal = (int)$cart[$id]['quantity'] * (double)$cart[$id]['price'];
+        session()->put("cart", $cart);
+
+        return response()->json([
+            "status" => "success",
+            "msg" => "Berhasil mengubah jumlah produk dari cart",
+            "subtotal" => $subtotal,
+        ]);
+    }
+
     public function riwayatSemuaTransaksi()
     {
         $riwayats = Order::orderBy('created_at')->get();

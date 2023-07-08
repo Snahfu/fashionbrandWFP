@@ -46,6 +46,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Keranjang
     Route::get('order/keranjang', [OrderController::class, 'keranjang'])->name('order.keranjang');
+    Route::post('order/hapusBarang',[OrderController::class, 'hapusBarang'])->name('order.hapusBarang');
+    Route::post('order/ubahJumlah',[OrderController::class, 'ubahJumlah'])->name('order.ubahJumlah');
 
     // Checkout
     Route::get('order/checkout', [OrderController::class, 'checkout'])->name('order.checkout');

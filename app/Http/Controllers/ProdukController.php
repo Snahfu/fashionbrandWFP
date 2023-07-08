@@ -202,7 +202,7 @@ class ProdukController extends Controller
 
     public function tambahKeranjang(Request $request)
     {
-        $produk = Produk::find($request)->get('produk_id');
+        $produk = Produk::find($request->get('produk_id'));
         $quantity = $request->get('quantity');
         $cart = session()->get("cart");
         if (!$cart) {
@@ -210,9 +210,9 @@ class ProdukController extends Controller
         }
         if (!isset($cart[$produk->id])) {
             $cart[$produk->id] = [
-                "name" => $produk->name,
+                "name" => $produk->nama_produk,
                 "quantity" => $quantity,
-                "price" => $produk->price,
+                "price" => $produk->harga,
                 "gambar" => $produk->url_gambar
             ];
         } else {

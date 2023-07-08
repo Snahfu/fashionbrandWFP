@@ -34,46 +34,47 @@ Keranjang
                     <th scope="col">Nama</th>
                     <th scope="col">Harga Satuan</th>
                     <th scope="col">Qty</th>
-                    <th scope="col">Harga Total</th>
+                    <th scope="col">Subtotal</th>
                     <th scope="col" class="datatable-nosort">Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                @if(carts)
+                @if($carts)
                 @php
-                $subtotal = 0;
+                $total = 0;
                 @endphp
-                @foreach ($carts as $c)
+                @foreach ($carts as $key => $value)
                 @php
-                    $subtotal += $c["quantity"] * $c
-                @endphp    
-                @endforeach
-                @endif
-
-                <tr>
-                    <th scope="row">1</th>
-                    <td class="editable" id="">
-                        <img src="https://loremflickr.com/320/240" class="img-thumbnail img-product" alt="...">
+                $subtotal = (int)$value["quantity"] * (int)$value["price"];
+                $total +=$subtotal;
+                @endphp
+                <tr id="row_{{ $key }}">
+                    <th scope="row">{{ $key }}</th>
+                    <td id="">
+                        <img src="{{ asset('images/'.$value['gambar']) }}" class="img-thumbnail img-product"
+                            alt="{{ $value['name'] }}">
                     </td>
-                    <td class="editable" id="">A</td>
-                    <td class="editable" id="">A</td>
-                    <td class="col-2">
-                        <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected pt-3">
-                            <input id="demo3_22" type="text" value="33" name="demo3_22" class="form-control">
-                        </div>
-                    </td>
-                    <td class="editable" id="">A</td>
+                    <td id="">{{ $value["name"] }}</td>
+                    <td id="">{{ $value["price"] }}</td>
                     <td>
-                        <button class="btn btn-danger btn-sm" style="display: inline-block">Hapus dari
+                        <input type="number" value="{{ $value['quantity'] }}" id="quantity_{{ $key }}"
+                            onchange="ubah({{ $key }})" class="form-control">
+                    </td>
+                    <td id="subtotal_{{ $key }}">{{ $subtotal }}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" onclick="hapus({{ $key }})"
+                            style="display: inline-block">Hapus dari
                             keranjang</button>
                     </td>
                 </tr>
+                @endforeach
+                @endif
             </tbody>
         </table>
     </div>
 </div>
 
-<button class="btn btn-primary" id="btnCheckout">Checkout</button>
+<div class="text-right"><button class="btn btn-primary" onclick="checkout()">Checkout</button></div>
 
 <div class="modal fade" id="modalCheckout" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -83,54 +84,49 @@ Keranjang
 
 @endsection
 
-{{-- <table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Gambar</th>
-            <th>Harga</th>
-            <th>Qty</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Anjing 1</td>
-            <td>
-                <img class="img-thumbnail img-product" src="{{ asset('images/'.$produk->url_gambar) }}" alt="">
-            </td>
-            <td>Anjing 1</td>
-            <td>Anjing 1</td>
-        </tr>
-    </tbody>
-</table> --}}
-
 @section('javascript')
 <script>
-    function getCheckoutModal(id) 
-        {
-            $.ajax({
+    function hapus(id){
+        $.ajax({
                 type:'POST',
-                url:'{{ route("member.halamancheckout") }}',
+                url:'{{ route("order.hapusBarang") }}',
                 data:{
                     '_token':'<?php echo csrf_token() ?>',
+                    'id':id
                 },
                 success: function(data){
-                    //         $cart[$produk->id] = [
-                    //     "name" => $produk->name,
-                    //     "quantity" => $quantity,
-                    //     "price" => $produk->price,
-                    //     "gambar" => $produk->url_gambar
-                    // ];
-                    if(data.status == "success"){
-                        var cart = data.cart
-                        var temporaryHTML = ""
-
-                    }
-                    else{
-                        $('#modalContent').html(data.msg);
-                    }
+                    $('#row_'+id).remove()
                 }
             });
-        }
+    }
+
+    function ubah(id){
+        $.ajax({
+                type:'POST',
+                url:'{{ route("order.ubahJumlah") }}',
+                data:{
+                    '_token':'<?php echo csrf_token() ?>',
+                    'id':id,
+                    'quantity':$('#quantity_'+id).val()
+                },
+                success: function(data){
+                    $('#subtotal_'+id).html(data.subtotal);
+                }
+            });
+    }
+
+    function checkout(){
+        $.ajax({
+                type:'POST',
+                url:'{{ route("order.checkout") }}',
+                data:{
+                    '_token':'<?php echo csrf_token() ?>',
+
+                },
+                success: function(data){
+                    $('#'+id).remove()
+                }
+            });
+    }
 </script>
 @endsection
