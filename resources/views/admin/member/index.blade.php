@@ -19,17 +19,24 @@ Lihat Member
                     <th scope="col">ID</th>
                     <th scope="col">Nama</th>
                     <th scope="col">Email</th>
+                    {{-- Gate supaya hanya Owner yang bisa hapus membership --}}
                     <th scope="col" class="datatable-nosort">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($members as $member)
-                <tr>
+                <tr id="tr_{{ $member->id }}">
                     <th scope="row">{{ $member->id }}</th>
                     <td class="editable" id=""> {{ $member->name }} </td>
                     <td class="editable" id="">{{ $member->email }}</td>
+                    {{-- Gate supaya hanya Owner yang bisa hapus membership --}}
                     <td>
-                        <button class="btn btn-danger btn-sm" style="display: inline-block">Hapus Membership</button>
+                        <a class="btn btn-danger btn-sm" href="#"
+                            onclick="if(confirm('yakin ingin menghapus {{ $member->name }} sebagai member?')) deleteMember({{ $member->id }})">
+                            <i class="icon-copy fa fa-user-o " aria-hidden="true">
+                            </i>
+                            <span style="padding-left:5px;">Hapus Membership</span>
+                        </a>
                     </td>
                 </tr>
                 @endforeach
@@ -41,6 +48,23 @@ Lihat Member
 
 @section('javascript')
 <script>
-
+    function deleteMember(id)
+    {
+        $.ajax({
+            type:'POST',
+            url: "{{ route('member.membership') }}",
+            data:{
+                'user_id': id,
+                'membership_status': 0,
+                '_token':'<?php echo csrf_token() ?>',
+            },
+            success: function(data){
+                if(data.status == 'oke') {
+                    $('#tr_'+id).remove();
+                    alert(data.msg);
+                }
+            }
+        });
+    }
 </script>
 @endsection

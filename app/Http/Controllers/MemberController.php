@@ -39,11 +39,6 @@ class MemberController extends Controller
         return view('admin.member.create', compact('pembelis'));
     }
 
-    public function pembeliBecomeMemberList()
-    {
-        
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -86,7 +81,18 @@ class MemberController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+    }
+
+    public function updateMembership(Request $request){
+        $user = User::find($request['user_id']);
+        $user->member = $request['membership_status'];
+        $user->update();
+
+        return response()->json(array(
+            'status' => 'oke',
+            'msg' => 'Status membership berhasil diperbaharui!'
+        ), 200);
     }
 
     /**

@@ -57,6 +57,7 @@ Route::resource('order', OrderController::class);
 
 // Member
 Route::resource('member', MemberController::class);
+Route::post('member/update-membership', [MemberController::class, 'updateMembership'])->name('member.membership');
 
 });
 

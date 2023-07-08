@@ -129,8 +129,8 @@ Produk
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">Kategori</label>
                         <div class="col-sm-12 col-md-10">
-                            <select class="selectpicker" multiple data-live-search="true" name="namaproduk[]"
-                                id="namaproduk" required>
+                            <select class="selectpicker" multiple data-live-search="true" name="kategoriproduk[]"
+                                id="kategorisproduk" required>
                                 @foreach ($kategoris as $kategori)
                                 <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
                                 @endforeach

@@ -24,12 +24,16 @@ Tambah Member
             </thead>
             <tbody>
                 @foreach ($pembelis as $pembeli)
-                <tr>
+                <tr id="tr_{{ $pembeli->id }}">
                     <th scope="row">{{ $pembeli->id }}</th>
                     <td class="editable" id=""> {{ $pembeli->name }} </td>
                     <td class="editable" id="">{{ $pembeli->email }}</td>
                     <td>
-                        <button class="btn btn-success btn-sm" style="display: inline-block">Jadikan Member</button>
+                        <a class="btn btn-success btn-sm" href="#" onclick="if(confirm('yakin ingin menambahkan {{ $pembeli->name }} sebagai member?')) addMember({{ $pembeli->id }})">
+                            <i class="icon-copy fa fa-user-o " aria-hidden="true">
+                            </i>
+                            <span style="padding-left:5px;">Jadikan Member</span>
+                        </a>
                     </td>
                 </tr>
                 @endforeach
@@ -42,5 +46,24 @@ Tambah Member
 @endsection
 
 @section('javascript')
-
+<script>
+    function addMember(id)
+    {
+        $.ajax({
+            type:'POST',
+            url: "{{ route('member.membership') }}",
+            data:{
+                'user_id': id,
+                'membership_status': 1,
+                '_token':'<?php echo csrf_token() ?>',
+            },
+            success: function(data){
+                if(data.status == 'oke') {
+                    $('#tr_'+id).remove();
+                    alert(data.msg);
+                }
+            }
+        });
+    }
+</script>
 @endsection

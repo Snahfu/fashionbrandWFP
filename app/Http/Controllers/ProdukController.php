@@ -8,7 +8,7 @@ use App\Models\Jenis;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-Use Alert;
+use Alert;
 use App\Models\KategoriProduk;
 use Illuminate\Support\Facades\File;
 
@@ -50,7 +50,7 @@ class ProdukController extends Controller
         // Upload Image
         $file = $request->file('gambarproduk');
         $imgFolder = 'images';
-        $imgFile = time()."_".$file->getClientOriginalName();
+        $imgFile = time() . "_" . $file->getClientOriginalName();
         $file->move($imgFolder, $imgFile);
         $data->url_gambar = $imgFile;
 
@@ -65,7 +65,7 @@ class ProdukController extends Controller
         $kategoris_id = $request->get('kategoriproduk');
 
         // save kategori_produk
-        foreach($kategoris_id as $id) {
+        foreach ($kategoris_id as $id) {
             DB::table('kategori_produk')->insert([
                 'kategori_id' => $id,
                 'produk_id' => $data->id,
@@ -83,7 +83,7 @@ class ProdukController extends Controller
         //     'nama' => $data->nama_produk,
         //     'harga' => $data->harga,
         // ),200);
-        
+
     }
 
     /**
@@ -123,7 +123,7 @@ class ProdukController extends Controller
         // update image
         $file = $request->file('gambarproduk');
         $imgFolder = 'images';
-        $imgFile = time()."_".$file->getClientOriginalName();
+        $imgFile = time() . "_" . $file->getClientOriginalName();
         $file->move($imgFolder, $imgFile);
         $data->url_gambar = $imgFile;
 
@@ -140,7 +140,7 @@ class ProdukController extends Controller
 
         // save kategori_produk
         $kategoris_id = $request->get('kategoriproduk');
-        foreach($kategoris_id as $cid) {
+        foreach ($kategoris_id as $cid) {
             DB::table('kategori_produk')->insert([
                 'kategori_id' => $cid,
                 'produk_id' => $id,
@@ -150,8 +150,8 @@ class ProdukController extends Controller
         }
 
         // delete old image
-        $image_path = public_path('images/'.$old);
-        if(File::exists($image_path)) {
+        $image_path = public_path('images/' . $old);
+        if (File::exists($image_path)) {
             File::delete($image_path);
         }
 
