@@ -13,9 +13,12 @@ class MemberController extends Controller
      */
     public function index()
     {
+        
         // Logic ambil semua member
         return view('admin.member.index');
     }
+
+    public
 
     /**
      * Show the form for creating a new resource.

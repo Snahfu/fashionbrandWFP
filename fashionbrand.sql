@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 02, 2023 at 02:27 PM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 7.4.30
+-- Generation Time: Jul 08, 2023 at 04:18 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -41,11 +41,11 @@ CREATE TABLE `detailorders` (
 
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -57,23 +57,24 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `jenises` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deskripsi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `deskripsi` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `jenises`
 --
 
-INSERT INTO `jenises` (`id`, `nama`, `deskripsi`, `created_at`, `updated_at`) VALUES
-(1, 'Pakaian', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet sapiente enim, ex placeat tempora ipsa asperiores ut necessitatibus repellat earum inventore hic laudantium aliquam facere sequi labore debitis ad repudiandae', '2023-06-30 09:25:45', '2023-06-30 10:29:52'),
-(2, 'Aksesoris', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio ea et consequatur quos facilis totam cum, unde beatae! Quasi ullam ad voluptate est, eligendi consectetur dolore ipsum quibusdam aspernatur cumque.', '2023-06-30 10:47:48', '2023-06-30 10:47:48'),
-(4, 'Alat Make-Up', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit possimus odio dicta quos enim recusandae quisquam, libero ad tempore nostrum similique voluptatem corporis eligendi ea labore nihil nobis inventore nesciunt!', '2023-06-30 10:49:07', '2023-06-30 10:49:07'),
-(5, 'Sepatu', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo ea enim est provident quisquam sapiente adipisci? Vel, iure laudantium earum velit quos amet odit numquam qui ipsam incidunt, nisi kum', '2023-06-30 10:50:43', '2023-06-30 10:50:43'),
-(6, 'Perhiasan', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae reiciendis quisquam debitis, pariatur libero atque aliquam ex mollitia numquam. Aut illum aliquam at iure hic voluptates ullam possimus numquam minima', '2023-06-30 10:53:20', '2023-06-30 10:53:53'),
-(7, 'Sandal', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sunt iure beatae, sed provident maiores cum, veniam nihil culpa, fugit expedita ullam. Suscipit fugit provident autem nam consequuntur quis natus aliquam.', '2023-06-30 10:59:59', '2023-06-30 11:00:18');
+INSERT INTO `jenises` (`id`, `nama`, `deskripsi`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Pakaian', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet sapiente enim, ex placeat tempora ipsa asperiores ut necessitatibus repellat earum inventore hic laudantium aliquam facere sequi labore debitis ad repudiandae', '2023-06-30 09:25:45', '2023-06-30 10:29:52', NULL),
+(2, 'Aksesoris', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio ea et consequatur quos facilis totam cum, unde beatae! Quasi ullam ad voluptate est, eligendi consectetur dolore ipsum quibusdam aspernatur cumque.', '2023-06-30 10:47:48', '2023-06-30 10:47:48', NULL),
+(4, 'Alat Make-Up', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit possimus odio dicta quos enim recusandae quisquam, libero ad tempore nostrum similique voluptatem corporis eligendi ea labore nihil nobis inventore nesciunt!', '2023-06-30 10:49:07', '2023-06-30 10:49:07', NULL),
+(5, 'Sepatu', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo ea enim est provident quisquam sapiente adipisci? Vel, iure laudantium earum velit quos amet odit numquam qui ipsam incidunt, nisi kum', '2023-06-30 10:50:43', '2023-06-30 10:50:43', NULL),
+(6, 'Perhiasan', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae reiciendis quisquam debitis, pariatur libero atque aliquam ex mollitia numquam. Aut illum aliquam at iure hic voluptates ullam possimus numquam minima', '2023-06-30 10:53:20', '2023-06-30 10:53:53', NULL),
+(7, 'Sandal', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sunt iure beatae, sed provident maiores cum, veniam nihil culpa, fugit expedita ullam. Suscipit fugit provident autem nam consequuntur quis natus aliquam.', '2023-06-30 10:59:59', '2023-06-30 11:00:18', NULL);
 
 -- --------------------------------------------------------
 
@@ -83,32 +84,21 @@ INSERT INTO `jenises` (`id`, `nama`, `deskripsi`, `created_at`, `updated_at`) VA
 
 CREATE TABLE `kategoris` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deskripsi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `deskripsi` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `kategoris`
 --
 
-INSERT INTO `kategoris` (`id`, `nama`, `deskripsi`, `created_at`, `updated_at`) VALUES
-(1, 'Pria', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, distinctio! Hic tempore iusto praesentium rerum ipsa cupiditate consequuntur, veniam necessitatibus? Debitis animi libero reiciendis aspernatur soluta inventore sit commodi officia.', '2023-06-30 19:12:26', '2023-06-30 19:12:44'),
-(2, 'Wanita', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquid temporibus natus culpa facilis id fuga possimus mollitia, autem accusantium voluptatum ut officia accusamus illo numquam aspernatur, eos debitis cupiditate placeat.', '2023-06-30 19:16:36', '2023-06-30 19:16:36'),
-(3, 'Anak-anak', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam distinctio sit id maxime beatae. Molestiae sit dolor ipsam voluptatum aut vitae incidunt optio explicabo perspiciatis, nulla quae. Voluptates, tempora ab!', '2023-06-30 19:17:20', '2023-06-30 19:17:20');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `kategoris_produks`
---
-
-CREATE TABLE `kategoris_produks` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+INSERT INTO `kategoris` (`id`, `nama`, `deskripsi`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Pria', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, distinctio! Hic tempore iusto praesentium rerum ipsa cupiditate consequuntur, veniam necessitatibus? Debitis animi libero reiciendis aspernatur soluta inventore sit commodi officia.', '2023-06-30 19:12:26', '2023-06-30 19:12:44', NULL),
+(2, 'Wanita', 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquid temporibus natus culpa facilis id fuga possimus mollitia, autem accusantium voluptatum ut officia accusamus illo numquam aspernatur, eos debitis cupiditate placeat.', '2023-06-30 19:16:36', '2023-06-30 19:16:36', NULL),
+(3, 'Anak-anak', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam distinctio sit id maxime beatae. Molestiae sit dolor ipsam voluptatum aut vitae incidunt optio explicabo perspiciatis, nulla quae. Voluptates, tempora ab!', '2023-06-30 19:17:20', '2023-06-30 19:17:20', NULL);
 
 -- --------------------------------------------------------
 
@@ -120,19 +110,20 @@ CREATE TABLE `kategori_produk` (
   `kategori_id` bigint(20) UNSIGNED NOT NULL,
   `produk_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `kategori_produk`
 --
 
-INSERT INTO `kategori_produk` (`kategori_id`, `produk_id`, `created_at`, `updated_at`) VALUES
-(1, 8, '2023-07-01 10:18:09', '2023-07-01 10:18:09'),
-(1, 9, '2023-07-01 10:52:31', '2023-07-01 10:52:31'),
-(1, 10, '2023-07-01 10:54:58', '2023-07-01 10:54:58'),
-(2, 8, '2023-07-01 10:18:09', '2023-07-01 10:18:09'),
-(3, 10, '2023-07-01 10:54:58', '2023-07-01 10:54:58');
+INSERT INTO `kategori_produk` (`kategori_id`, `produk_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 8, '2023-07-01 10:18:09', '2023-07-01 10:18:09', NULL),
+(1, 9, '2023-07-01 10:52:31', '2023-07-01 10:52:31', NULL),
+(1, 10, '2023-07-01 10:54:58', '2023-07-01 10:54:58', NULL),
+(2, 8, '2023-07-01 10:18:09', '2023-07-01 10:18:09', NULL),
+(3, 10, '2023-07-01 10:54:58', '2023-07-01 10:54:58', NULL);
 
 -- --------------------------------------------------------
 
@@ -142,7 +133,7 @@ INSERT INTO `kategori_produk` (`kategori_id`, `produk_id`, `created_at`, `update
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -161,7 +152,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (8, '2023_06_26_023133_create_kategoris_produks_table', 1),
 (9, '2023_06_30_063652_create_orders_table', 1),
 (10, '2023_06_30_063715_create_detailorders_table', 1),
-(11, '2023_06_30_135551_create_kategori_produk_table', 1);
+(11, '2023_06_30_135551_create_kategori_produk_table', 1),
+(12, '2023_06_30_063715_create_order_produk_table', 2),
+(13, '2023_07_06_012500_add_deleted_add_to_jenises_table', 2),
+(14, '2023_07_06_012515_add_deleted_add_to_kategoris_table', 2),
+(15, '2023_07_06_012529_add_deleted_add_to_produks_table', 2),
+(16, '2023_07_06_012547_add_deleted_add_to_kategori_produk_table', 2),
+(17, '2023_07_08_020840_add_poin_add_member_to_users_table', 3);
 
 -- --------------------------------------------------------
 
@@ -178,12 +175,26 @@ CREATE TABLE `orders` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `order_produk`
+--
+
+CREATE TABLE `order_produk` (
+  `order_id` bigint(20) UNSIGNED NOT NULL,
+  `produk_id` bigint(20) UNSIGNED NOT NULL,
+  `kuantitas` int(11) NOT NULL,
+  `harga` double NOT NULL,
+  `subtotal` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `password_resets`
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -195,11 +206,11 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_type` varchar(255) NOT NULL,
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `abilities` text DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -213,24 +224,25 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `produks` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nama_produk` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama_produk` varchar(255) NOT NULL,
   `jenis_id` bigint(20) UNSIGNED NOT NULL,
-  `brand_produk` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `brand_produk` varchar(255) NOT NULL,
   `harga` double(12,2) NOT NULL,
-  `dimensi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `url_gambar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dimensi` varchar(255) NOT NULL,
+  `url_gambar` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `produks`
 --
 
-INSERT INTO `produks` (`id`, `nama_produk`, `jenis_id`, `brand_produk`, `harga`, `dimensi`, `url_gambar`, `created_at`, `updated_at`) VALUES
-(8, 'Sepatu Lari', 5, 'Nike', 650000.00, '41', '1688231889_images.jpg', '2023-07-01 10:18:09', '2023-07-01 10:18:09'),
-(9, 'Sepatu Lari 2', 5, 'Nike', 800000.00, '44', '1688233951_sepatuu.jpg', '2023-07-01 10:52:31', '2023-07-01 10:52:31'),
-(10, 'Sepatu Lari 3', 5, 'Nike', 1200000.00, '46', '1688234098_sepatuu.jpg', '2023-07-01 10:54:58', '2023-07-01 10:54:58');
+INSERT INTO `produks` (`id`, `nama_produk`, `jenis_id`, `brand_produk`, `harga`, `dimensi`, `url_gambar`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(8, 'Sepatu Lari', 5, 'Nike', 650000.00, '41', '1688231889_images.jpg', '2023-07-01 10:18:09', '2023-07-01 10:18:09', NULL),
+(9, 'Sepatu Lari 2', 5, 'Nike', 800000.00, '44', '1688233951_sepatuu.jpg', '2023-07-01 10:52:31', '2023-07-01 10:52:31', NULL),
+(10, 'Sepatu Lari 3', 5, 'Nike', 1200000.00, '46', '1688234098_sepatuu.jpg', '2023-07-01 10:54:58', '2023-07-01 10:54:58', NULL);
 
 -- --------------------------------------------------------
 
@@ -240,14 +252,16 @@ INSERT INTO `produks` (`id`, `nama_produk`, `jenis_id`, `brand_produk`, `harga`,
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role` enum('pembeli','owner','staff') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `role` enum('pembeli','owner','staff') NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `poin` int(11) NOT NULL,
+  `member` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -282,12 +296,6 @@ ALTER TABLE `kategoris`
   ADD UNIQUE KEY `kategoris_nama_unique` (`nama`);
 
 --
--- Indexes for table `kategoris_produks`
---
-ALTER TABLE `kategoris_produks`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `kategori_produk`
 --
 ALTER TABLE `kategori_produk`
@@ -305,6 +313,13 @@ ALTER TABLE `migrations`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `order_produk`
+--
+ALTER TABLE `order_produk`
+  ADD PRIMARY KEY (`order_id`,`produk_id`),
+  ADD KEY `order_produk_produk_id_foreign` (`produk_id`);
 
 --
 -- Indexes for table `password_resets`
@@ -364,16 +379,10 @@ ALTER TABLE `kategoris`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `kategoris_produks`
---
-ALTER TABLE `kategoris_produks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -409,6 +418,13 @@ ALTER TABLE `users`
 ALTER TABLE `kategori_produk`
   ADD CONSTRAINT `kategori_produk_kategori_id_foreign` FOREIGN KEY (`kategori_id`) REFERENCES `kategoris` (`id`),
   ADD CONSTRAINT `kategori_produk_produk_id_foreign` FOREIGN KEY (`produk_id`) REFERENCES `produks` (`id`);
+
+--
+-- Constraints for table `order_produk`
+--
+ALTER TABLE `order_produk`
+  ADD CONSTRAINT `order_produk_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
+  ADD CONSTRAINT `order_produk_produk_id_foreign` FOREIGN KEY (`produk_id`) REFERENCES `produks` (`id`);
 
 --
 -- Constraints for table `produks`

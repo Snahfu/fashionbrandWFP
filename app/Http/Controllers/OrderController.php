@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -13,16 +15,52 @@ class OrderController extends Controller
         return view('admin.order.index');
     }
 
-    public function riwayatTransaksi()
-    {
-        // Logic ambil semua transaksi user yang login
-        return view('pembeli.transaksi');
-    }
-
     public function keranjang()
     {
         return view('pembeli.keranjang');
     }
+
+    public function riwayatTransaksi($userId){
+        $history = Order::where("user_id", $userId)->get();
+        return view("pembeli.transaksi", ['riwayats'=> $history]);
+    }
+
+    public function checkoutPage($userId){
+        // Ambil user login dulu
+        $userPoin = User::find($userId);
+        return view("pembeli.checkout", ['poin'=> $userPoin]);
+    }
+
+    public function redemptionPoin(Request $request){
+        $user = User::find($request->get('userid'));
+        // Sebelum di pajak
+        $subTotal = $request->get('subtotal');
+        $pesan = "Berhasil mengkonversikan poin";
+
+        // Bukan Member
+        if($user->member){
+            $pesan = "Anda bukan member";
+            return response()->json(array(
+                "status" => "failure",
+                "pesan" => $pesan
+            ));
+        }
+
+        // Subtotal kurang dari 100rb
+        if($subTotal < 100000){
+            $pesan = "Untuk menggunakan poin silahkan melakukan belanja lebih!";
+            return response()->json(array(
+                "status" => "failure",
+                "pesan" => $pesan
+            ));
+        }
+
+        return response()->json(array(
+            "status" => "success",
+            "pesan" => $pesan
+        ));
+    }
+
 
     /**
      * Show the form for creating a new resource.
