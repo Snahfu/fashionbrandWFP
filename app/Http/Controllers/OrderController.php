@@ -20,7 +20,6 @@ class OrderController extends Controller
     public function keranjang()
     {
         $carts = session()->get("cart");
-        dd($carts);
         return view('pembeli.order.keranjang', compact('carts'));
     }
 
@@ -43,7 +42,7 @@ class OrderController extends Controller
         $quantity = $request->get('quantity');
         $cart = session()->get('cart');
         $cart[$id]['quantity'] = $quantity;
-        $subtotal = (int)$cart[$id]['quantity'] * (double)$cart[$id]['price'];
+        $subtotal = (int)$cart[$id]['quantity'] * (float)$cart[$id]['price'];
         session()->put("cart", $cart);
 
         return response()->json([
@@ -81,9 +80,65 @@ class OrderController extends Controller
 
     public function checkout()
     {
-        // Ambil user login dulu
         $user = Auth::user();
-        return view("pembeli.order.checkout", ['user' => $user])->render();
+        $cart = session()->get('cart');
+        return response()->json(array(
+            'status' => 'oke',
+            'msg' => view('pembeli.order.checkout', compact('user', 'cart'))->render(),
+        ));
+    }
+
+    public function pesan(Request $request)
+    {
+        $user = Auth::user();
+        $subtotal = intval($request->get('subtotal'));
+        $pajak = intval($request->get('pajak'));
+        $poin_dipakai = intval($request->get('poin_dipakai'));
+        $total = intval($request->get('total'));
+        $poin_didapat = intval($request->get('poin_didapat'));
+        $cart = session()->get('cart');
+
+        try {
+            DB::beginTransaction();
+            $order = new Order();
+            $order->user_id = $user->id;
+            $order->subtotal = $subtotal;
+            $order->pajak = $pajak;
+            $order->potongan = $poin_dipakai * 1000;
+            $order->total = $total;
+            $order->poin_didapat = $poin_didapat;
+            $order->save();
+            $order_id = $order->id;
+
+            $user->poin -= $poin_dipakai;
+            $user->save();
+
+            $produks = [];
+            foreach ($cart as $key => $value) {
+                $produk = [];
+                $produk['order_id'] = $order_id;
+                $produk['produk_id'] = $key;
+                $produk['kuantitas'] = $value['quantity'];
+                $produk['harga'] = $value['price'];
+                $produk['subtotal'] = $value['price'] * $value['quantity'];
+                $produks[] = $produk;
+            }
+
+            $order->produks()->attach($produks);
+            DB::commit();
+            session()->forget('cart');
+
+            return response()->json(array(
+                "status" => "success",
+                "msg" => "Berhasil memesan order"
+            ));
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json(array(
+                "status" => "failure",
+                "msg" => $e
+            ));
+        }
     }
 
     public function checkoutProcess(Request $request)

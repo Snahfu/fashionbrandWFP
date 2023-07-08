@@ -25,54 +25,6 @@
                 <p>Lakukan checkout untuk melakukan pembelian pada barang anda yang ada di dalam keranjang</p>
             </div>
         </div>
-        <div class="table-responsive">
-            <table class="data-table table stripe hover nowrap" id="tabeljenis">
-                <thead>
-                    <tr>
-                        <th scope="col">Produk ID</th>
-                        <th scope="col">Gambar</th>
-                        <th scope="col">Nama</th>
-                        <th scope="col">Harga Satuan</th>
-                        <th scope="col">Qty</th>
-                        <th scope="col">Harga Total</th>
-                        <th scope="col" class="datatable-nosort">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (carts)
-                        @php
-                            $subtotal = 0;
-                        @endphp
-                        @foreach ($carts as $c)
-                            @php
-                                $subtotal += $c['quantity'] * $c['price'];
-                            @endphp
-                            <tr>
-                                <th scope="row">{{$c['id']}}</th>
-                                <td class="editable" id="">
-                                    <img src="https://loremflickr.com/320/240" class="img-thumbnail img-product" alt="...">
-                                </td>
-                                <td class="editable" id="">A</td>
-                                <td class="editable" id="">A</td>
-                                <td class="col-2">
-                                    <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected pt-3">
-                                        <input id="demo3_22" type="text" value="33" name="demo3_22" class="form-control">
-                                    </div>
-                                </td>
-                                <td class="editable" id="">A</td>
-                                <td>
-                                    <button class="btn btn-danger btn-sm" style="display: inline-block">Hapus dari
-                                        keranjang</button>
-                                </td>
-                            </tr>
-                        @endforeach
-                    @endif
-
-
-                </tbody>
-            </table>
-        </div>
-    </div>
     <div class="table-responsive">
         <table class="data-table table stripe hover nowrap" id="tabeljenis">
             <thead>
@@ -122,7 +74,9 @@
     </div>
 </div>
 
-<div class="text-right"><button class="btn btn-primary" onclick="checkout()">Checkout</button></div>
+@if ($carts)
+<div class="text-right"><a class="btn btn-primary" href="#modalCheckout" data-toggle="modal" onclick="checkout()">Checkout</a></div>
+@endif
 
 <div class="modal fade" id="modalCheckout" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -165,14 +119,10 @@
 
     function checkout(){
         $.ajax({
-                type:'POST',
+                type:'GET',
                 url:'{{ route("order.checkout") }}',
-                data:{
-                    '_token':'<?php echo csrf_token() ?>',
-
-                },
                 success: function(data){
-                    $('#'+id).remove()
+                    $('#modalContent').html(data.msg);
                 }
             });
     }

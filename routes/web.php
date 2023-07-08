@@ -51,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Checkout
     Route::get('order/checkout', [OrderController::class, 'checkout'])->name('order.checkout');
+    Route::post('order/pesan',[OrderController::class, 'pesan'])->name('order.pesan');
 
     // Order
     Route::get('order/riwayat-transaksi', [OrderController::class, 'riwayatSemuaTransaksi'])->name('order.all');
