@@ -57,7 +57,8 @@ Produk
         </div>
         <div class="blog-pagination mb-30">
             <div class="btn-toolbar justify-content-center mb-15">
-                <div class="btn-group">
+                {{ $produks->links() }}
+                {{-- <div class="btn-group">
                     <a href="#" class="btn btn-outline-primary prev"><i class="fa fa-angle-double-left"></i></a>
                     <span class="btn btn-primary current">1</span>
                     <a href="#" class="btn btn-outline-primary">2</a>
@@ -65,7 +66,7 @@ Produk
                     <a href="#" class="btn btn-outline-primary">4</a>
                     <a href="#" class="btn btn-outline-primary">5</a>
                     <a href="#" class="btn btn-outline-primary next"><i class="fa fa-angle-double-right"></i></a>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -116,7 +117,7 @@ Produk
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">Gambar</label>
                         <div class="col-sm-12 col-md-10">
-                            <input type="file" class="form-control-file form-control height-auto" name="gambarproduk"
+                            <input type="file" class="form-control-file form-control height-auto" accept="image/*" name="gambarproduk"
                                 id="gambarproduk" required>
                         </div>
                     </div>

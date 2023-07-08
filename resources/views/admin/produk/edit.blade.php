@@ -35,7 +35,7 @@
         <div class="form-group row">
             <label class="col-sm-12 col-md-2 col-form-label">Gambar</label>
             <div class="col-sm-12 col-md-10">
-                <input type="file" class="form-control-file form-control height-auto" name="gambarproduk" id="gambarproduk" required>
+                <input type="file" class="form-control-file form-control height-auto" accept="image/*" name="gambarproduk" id="gambarproduk" required>
             </div>
         </div>
         <div class="form-group row">

@@ -10,10 +10,11 @@ Kategori
         <div class="pull-left">
             <h4 class="text-blue h4" style="display: inline-block">Daftar Kategori</h4>
             <a class="btn btn-success btn-sm ml-2" href="#modalCreate" data-toggle="modal" style="display: inline-block">+</a>
+            <button class="btn btn-primary" onclick="coba()">Coba</button>
         </div>
     </div>
     {{-- <div class="table-responsive"> --}}
-        <table class="data-table table stripe hover nowrap" id="tabelkategori">
+        <table class="data-table table hover nowrap" id="tabelkategori">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -29,17 +30,8 @@ Kategori
                         <td class="editable" id="td_nama_{{ $kategori->id }}">{{ $kategori->nama }}</td>
                         <td class="editable" id="td_deskripsi_{{ $kategori->id }}">{{ $kategori->deskripsi }}</td>
                         <td>
-                            {{-- <a href="#modalEdit" onclick="getEditForm({{ $kategori->id }})" data-toggle="modal" class="btn btn-primary btn-sm" style="display: inline-block">Ubah</a>
-                            <button class="btn btn-danger btn-sm" style="display: inline-block" onclick="if(confirm('yakin ingin menghapus {{ $kategori->id }} - {{ $kategori->nama }}?')) deleteDataRemoveTR({{ $kategori->id }})">Hapus</button> --}}
-                            <div class="dropdown">
-                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                    <i class="dw dw-more"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <a class="dropdown-item" href="#modalEdit" onclick="getEditForm({{ $kategori->id }})" data-toggle="modal"><i class="dw dw-edit2"></i> Ubah</a>
-                                    <a class="dropdown-item" href="#"><i class="dw dw-delete-3" onclick="if(confirm('yakin ingin menghapus {{ $kategori->id }} - {{ $kategori->nama }}?')) deleteDataRemoveTR({{ $kategori->id }})"></i> Hapus</a>
-                                </div>
-                            </div>
+                            <a href="#modalEdit" onclick="getEditForm({{ $kategori->id }})" data-toggle="modal" class="btn btn-primary btn-sm" style="display: inline-block">Ubah</a>
+                            <button class="btn btn-danger btn-sm" style="display: inline-block" onclick="if(confirm('yakin ingin menghapus {{ $kategori->id }} - {{ $kategori->nama }}?')) deleteDataRemoveTR({{ $kategori->id }})">Hapus</button>
                         </td>
                     </tr>
                 @endforeach
@@ -98,6 +90,23 @@ Kategori
     $('#modalCreate').on('shown.bs.modal', function () {
         $('#namakategori').trigger('focus')
     })
+
+    function coba() {
+        var table = $('#tabelkategori').DataTable({
+            'createdRow': function( row, data, dataIndex ) {
+                $(row).attr('id', 'row-' + dataIndex);
+            },
+            'columnDefs': [
+                {
+                    'targets': 3,
+                    'createdCell':  function (td, cellData, rowData, row, col) {
+                        $(td).attr('id', 'cell-' + cellData); 
+                    }
+                }
+            ]
+        });
+        table.row.add(['4', 'Accountant', 'Tokyo', '5407']).draw();
+    }
 
     function saveDataAddTD() {
         var nama = $('#namakategori').val();

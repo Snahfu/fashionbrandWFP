@@ -24,7 +24,7 @@ class ProdukController extends Controller
     {
         $jenises = Jenis::all();
         $kategoris = Kategori::all();
-        $produks = Produk::all();
+        $produks = Produk::orderBy('created_at', 'desc')->paginate(6);
         confirmDelete('Yakin ingin menghapus data?');
         return view('admin.produk.index', compact('jenises', 'kategoris', 'produks'));
     }
