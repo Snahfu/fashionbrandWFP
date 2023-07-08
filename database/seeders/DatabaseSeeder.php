@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Jenis;
 use App\Models\Kategori;
+use App\Models\Order;
 use App\Models\Produk;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -21,5 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(JenisSeeder::class, false, ["path" => "database/data/2-jenises.csv", "model" => Jenis::class]);
         $this->call(ProdukSeeder::class, false, ["path" => "database/data/3-produks.csv", "model" => Produk::class]);
         $this->call(UserSeeder::class, false, ["path" => "database/data/4-users.csv", "model" => User::class]);
+        $this->call(OrderSeeder::class, false, ["path" => "database/data/5-orders.csv", "model" => Order::class]);
     }
 }

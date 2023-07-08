@@ -27,13 +27,18 @@ class MemberController extends Controller
      */
     public function create()
     {
+
+    }
+
+    public function pembeliBecomeMemberList()
+    {
         // Logic ambil semua pembeli yang sudah beli dan belum menjadi member
         $pembelis = DB::table('users')
-        ->join('orders', 'users.id', '=', 'orders.user_id')
-        ->select('users.id', 'users.nama', 'users.email')
-        ->where('users.member', 0)
-        ->distinct('users.id')
-        ->get();
+            ->join('orders', 'users.id', '=', 'orders.user_id')
+            ->select('users.id', 'users.nama', 'users.email')
+            ->where('users.member', 0)
+            ->distinct('users.id')
+            ->get();
 
         return view('admin.member.create', compact('pembelis'));
     }
