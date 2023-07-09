@@ -61,7 +61,7 @@
                 <select class="custom-select col-12" name="jenisproduk" id="jenisproduk" required>
                     <option value="">Choose...</option>
                     @foreach ($jenises as $jenis)
-                    @if ($jenis->id == $data->jenis->id)
+                    @if ($jenis->id == $data->jenis_id)
                     <option value="{{ $jenis->id }}" selected>{{ $jenis->nama }}</option>
                     @else
                     <option value="{{ $jenis->id }}">{{ $jenis->nama }}</option>
