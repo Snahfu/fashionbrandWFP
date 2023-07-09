@@ -10,12 +10,11 @@ Kategori
         <div class="pull-left">
             <h4 class="text-blue h4" style="display: inline-block">Daftar Kategori</h4>
             <a class="btn btn-success btn-sm ml-2" href="#modalCreate" data-toggle="modal" style="display: inline-block">+</a>
-            <button class="btn btn-primary" onclick="coba()">Coba</button>
             <p class="mt-3">Detail seluruh kategori produk dapat dilihat pada tabel di bawah ini</p>
         </div>
     </div>
     {{-- <div class="table-responsive"> --}}
-        <table class="data-table table hover nowrap" id="tabelkategori">
+        <table class="data-table table stripe hover nowrap" id="tabelkategori">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -27,7 +26,7 @@ Kategori
             <tbody>
                 @foreach ($kategoris as $kategori)
                     <tr id="tr_{{ $kategori->id }}">
-                        <th scope="row">{{ $kategori->id }}</th>
+                        <td><b>{{ $kategori->id }}</b></td>
                         <td class="editable" id="td_nama_{{ $kategori->id }}">{{ $kategori->nama }}</td>
                         <td class="editable" id="td_deskripsi_{{ $kategori->id }}">{{ $kategori->deskripsi }}</td>
                         <td>
@@ -92,23 +91,6 @@ Kategori
         $('#namakategori').trigger('focus')
     })
 
-    function coba() {
-        var table = $('#tabelkategori').DataTable({
-            'createdRow': function( row, data, dataIndex ) {
-                $(row).attr('id', 'row-' + dataIndex);
-            },
-            'columnDefs': [
-                {
-                    'targets': 3,
-                    'createdCell':  function (td, cellData, rowData, row, col) {
-                        $(td).attr('id', 'cell-' + cellData); 
-                    }
-                }
-            ]
-        });
-        table.row.add(['4', 'Accountant', 'Tokyo', '5407']).draw();
-    }
-
     function saveDataAddTD() {
         var nama = $('#namakategori').val();
         var desc = $('#desckategori').val();
@@ -122,7 +104,16 @@ Kategori
             },
             success: function(data){
                 if(data.status == 'oke') {
-                    $("#tabelkategori > tbody").append("<tr id='tr_" + data.id + "'><th scope='row'>" + data.id + "</th><td id='td_nama_" + data.id + "'>" + nama + "</td><td id='td_deskripsi_" + data.id + "'>" + desc + "</td><td><a href='#modalEdit' onclick='getEditForm(" + data.id + ")' data-toggle='modal' class='btn btn-primary btn-sm' style='display: inline-block'>Ubah</a><button class='btn btn-danger btn-sm' style='display: inline-block' onclick='if(confirm(\"yakin ingin menghapus " + data.id + " - " + nama + "?\")) deleteDataRemoveTR(" + data.id + ")'>Hapus</button>" + "</td></tr>");
+                    // $('#tabelkategori').DataTable().append("<tr id='tr_" + data.id + "'><th scope='row'>" + data.id + "</th><td id='td_nama_" + data.id + "'>" + nama + "</td><td id='td_deskripsi_" + data.id + "'>" + desc + "</td><td><a href='#modalEdit' onclick='getEditForm(" + data.id + ")' data-toggle='modal' class='btn btn-primary btn-sm' style='display: inline-block'>Ubah</a><button class='btn btn-danger btn-sm' style='display: inline-block' onclick='if(confirm(\"yakin ingin menghapus " + data.id + " - " + nama + "?\")) deleteDataRemoveTR(" + data.id + ")'>Hapus</button>" + "</td></tr>");
+                    var table = $('#tabelkategori').DataTable();
+                    var dtable = $(table.row.add( ['<b>' + data.id + '</b>', nama, desc, "<a href='#modalEdit' onclick='getEditForm(" + data.id + ")' data-toggle='modal' class='btn btn-primary btn-sm mr-1' style='display: inline-block'>Ubah</a><button class='btn btn-danger btn-sm' style='display: inline-block' onclick='if(confirm(\"yakin ingin menghapus " + data.id + " - " + nama + "?\")) deleteDataRemoveTR(" + data.id + ")'>Hapus</button>"] ).node());
+                    dtable.find('td')[1].id = 'td_nama_' + data.id;
+                    dtable.find('td')[2].id = 'td_deskripsi_' + data.id;
+                    table.draw(false);
+                    $("#td_nama_" + data.id).addClass('editable');
+                    $("#td_deskripsi_" + data.id).addClass('editable');
+                    $('#tabelkategori tr:last').attr('id', 'tr_' + data.id);
+                    editInline();
                     $('#modalCreate').modal('hide');
                     $('#namakategori').val('');
                     $('#desckategori').val('');
@@ -186,36 +177,41 @@ Kategori
             },
             success: function(data){
                 if(data.status == 'oke') {
-                    $('#tr_'+id).remove();
+                    var table = $('#tabelkategori').DataTable();
+                    table.row('#tr_'+id).remove().draw();
+                    // $('#tr_'+id).remove();
                     alert(data.msg);
                 }
             }
         });
     }
 
-    $('.editable').editable({
-        closeOnEnter: true,
-        callback:function(data){
-            if(data.content){
-                var j_id = data.$el[0].id;
-                var fname = j_id.split('_')[1];
-                var id = j_id.split('_')[2];
+    function editInline() {
+        $('.editable').editable({
+            closeOnEnter: true,
+            callback:function(data){
+                if(data.content){
+                    var j_id = data.$el[0].id;
+                    var fname = j_id.split('_')[1];
+                    var id = j_id.split('_')[2];
 
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route("kategori.saveDataField") }}',
-                    data: {
-                        '_token':'<?php echo csrf_token() ?>',
-                        'id':id,
-                        'fname':fname,
-                        'value':data.content,
-                    },
-                    success: function(data) {
-                        alert(data.msg);
-                    }
-                });
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ route("kategori.saveDataField") }}',
+                        data: {
+                            '_token':'<?php echo csrf_token() ?>',
+                            'id':id,
+                            'fname':fname,
+                            'value':data.content,
+                        },
+                        success: function(data) {
+                            alert(data.msg);
+                        }
+                    });
+                }
             }
-        }
-    })
+        })
+    }
+    editInline();
 </script>
 @endsection
