@@ -8,15 +8,31 @@ Produk
 <div class="min-height-200px">
     <div class="page-header">
         <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="title" style="display: inline-block">
-                    <h4>Product</h4>
+            <div class="col-md-12 col-sm-12 d-flex row justify-content-between">
+                <div class="col-6">
+                    <div class="title" style="display: inline-block">
+                        <h4>Product</h4>
+                    </div>
+                    {{-- Owner, Staff --}}
+                    @canany(['owner-only', 'staff-only'])
+                    <a class="btn btn-success btn-sm ml-2" href="#modalCreate" data-toggle="modal"
+                        style="display: inline-block">+</a>
+                    @endcan
                 </div>
-                {{-- Owner, Staff --}}
-                @canany(['owner-only', 'staff-only'])
-                <a class="btn btn-success btn-sm ml-2" href="#modalCreate" data-toggle="modal"
-                    style="display: inline-block">+</a>
-                @endcan
+                <div class="col-6">
+                    <form action="{{ route('produk.index') }}" method="get" id="formsearch">
+                        <div class="input-group custom mb-0">
+                        <input type="text" class="form-control search-input" placeholder="Search Here" name="search">
+                        <div class="input-group-append custom" style="cursor: pointer" id="submitsearch">
+                            <span class="input-group-text"><i class="dw dw-search2 search-icon"></i></span>
+                        </div>
+                    </div>
+                    </form>
+                    {{-- <div class="form-group mb-0">
+                        <i class="dw dw-search2 search-icon"></i>
+                        <input type="text" class="form-control search-input" placeholder="Search Here">
+                    </div> --}}
+                </div>
             </div>
         </div>
     </div>
@@ -208,6 +224,10 @@ Produk
             }
         });
     }
+
+    $("#submitsearch").click(function(){
+        $("#formsearch").submit();
+    })
 // $('#formcreate').on('submit', function(event){
 //     event.preventDefault();
 //     $.ajax({

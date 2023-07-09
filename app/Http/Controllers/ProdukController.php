@@ -22,9 +22,13 @@ class ProdukController extends Controller
      */
     public function index()
     {
+        $filter = '';
+        if (isset($_GET['search'])){
+            $filter = $_GET['search'];
+        }
         $jenises = Jenis::all();
         $kategoris = Kategori::all();
-        $produks = Produk::orderBy('created_at', 'desc')->paginate(6);
+        $produks = Produk::where('nama_produk', 'like', '%'.$filter.'%')->orderBy('created_at', 'desc')->paginate(6);
         confirmDelete('Yakin ingin menghapus data?');
         return view('admin.produk.index', compact('jenises', 'kategoris', 'produks'));
     }
