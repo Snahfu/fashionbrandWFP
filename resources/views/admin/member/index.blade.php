@@ -20,7 +20,9 @@ Lihat Member
                     <th scope="col">Nama</th>
                     <th scope="col">Email</th>
                     {{-- Gate supaya hanya Owner yang bisa hapus membership --}}
+                    @can('owner-only')
                     <th scope="col" class="datatable-nosort">Aksi</th>
+                    @endcan
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +32,7 @@ Lihat Member
                     <td class="editable" id=""> {{ $member->name }} </td>
                     <td class="editable" id="">{{ $member->email }}</td>
                     {{-- Gate supaya hanya Owner yang bisa hapus membership --}}
+                    @can('owner-only')
                     <td>
                         <a class="btn btn-danger btn-sm" href="#"
                             onclick="if(confirm('yakin ingin menghapus {{ $member->name }} sebagai member?')) deleteMember({{ $member->id }})">
@@ -38,6 +41,7 @@ Lihat Member
                             <span style="padding-left:5px;">Hapus Membership</span>
                         </a>
                     </td>
+                    @endcan
                 </tr>
                 @endforeach
             </tbody>
