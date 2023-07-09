@@ -43,13 +43,13 @@ Login Page
 							</span>
 							@enderror
 							<div class="input-group-append custom">
-								<span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
+        						<span class="input-group-text"><i class="icon-copy ti-email"></i></span>
 							</div>
 						</div>
 						{{-- Password --}}
 						<div class="input-group custom">
 							<input id="password" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password"
-								placeholder="**********" required autocomplete="current-password">
+								placeholder="Password" required autocomplete="current-password">
 							
 							@error('password')
 							<span class="invalid-feedback" role="alert">
