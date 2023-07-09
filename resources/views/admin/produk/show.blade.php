@@ -22,6 +22,7 @@
                         </a>
                     </b></small>
             </div>
+            @can('pembeli-only')
             <div class="col-6 text-center">
                 <div class="form-group">
                     <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected">
@@ -39,6 +40,7 @@
                     <span style="padding-left:5px;">Add to cart</span>
                 </a>
             </div>
+            @endcan
         </div>
     </div>
 </div>

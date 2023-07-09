@@ -32,7 +32,6 @@ Produk
                             <div class="price">
                                 <ins style="margin: 0">Rp. {{ $produk->harga }}</ins>
                             </div>
-                            @can('pembeli-only')
                             <a href="#modalShow" data-toggle="modal" class="btn btn-outline-primary"
                                 onclick="getShowModal({{ $produk->id }}) ">Selengkapnya</a>
                             {{-- <form style="display: inline-block" action="{{ route('produk.destroy', $produk->id) }}"
@@ -42,7 +41,6 @@ Produk
                                 <input id="btndelete" type="submit" value="Delete" class="btn btn-outline-danger"
                                     data-confirm-delete="true">
                             </form> --}}
-                            @endcan
                             @canany(['owner-only', 'staff-only'])
                             <a class="btn btn-outline-info" href="#modalUpdate" data-toggle="modal"
                                 onclick="getEditForm({{ $produk->id }})">Ubah</a>
@@ -159,7 +157,6 @@ Produk
 </div>
 @endcan
 
-@can('pembeli-only')
 <div class="modal fade" id="modalShow" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content" id="contentShow">
@@ -178,7 +175,6 @@ Produk
         </div>
     </div>
 </div>
-@endcan
 @endsection
 
 @section('javascript')
