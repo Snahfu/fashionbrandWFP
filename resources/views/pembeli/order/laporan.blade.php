@@ -26,6 +26,7 @@ Laporan
         </div>
     </div>
     <div class="table-responsive">
+        {{-- <table class="table hover multiple-select-row data-table-export nowrap" id="table_laporan"> --}}
         <table class="table hover multiple-select-row data-table-export nowrap">
             <thead class="text-center">
                 <tr>
@@ -65,5 +66,11 @@ Laporan
 @endsection
 
 @section('javascript')
-
+{{-- <script>
+    new DataTable('#table_laporan', {
+    info: false,
+    ordering: false,
+    paging: true
+});
+</script> --}}
 @endsection

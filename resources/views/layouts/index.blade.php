@@ -84,6 +84,8 @@
 	<script src="{{ asset('assets/plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.js')}}"></script>
 	<script src="{{ asset('assets/vendors/scripts/advanced-components.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+	{{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> --}}
+	{{-- <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script> --}}
 	@include('sweetalert::alert')
 	@yield('javascript')
 </body>
