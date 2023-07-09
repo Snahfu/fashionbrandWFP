@@ -26,8 +26,8 @@ Laporan
         </div>
     </div>
     <div class="table-responsive">
-        <table class="data-table table stripe hover nowrap" id="tabeljenis">
-            <thead>
+        <table class="table hover multiple-select-row data-table-export nowrap">
+            <thead class="text-center">
                 <tr>
                     <th scope="col">Produk ID</th>
                     <th scope="col">Gambar</th>
@@ -39,7 +39,25 @@ Laporan
                     <th scope="col">Jumlah Terjual</th>
                 </tr>
             </thead>
-            
+            <tbody class="text-center">
+                @foreach ($datas as $data)
+                <tr>
+                    <td>{{ $data->id }}</td>
+                    <td>
+
+                        <img src="{{ asset('images/'.$data->url_gambar) }}" class="img-thumbnail img-product"
+                            alt="{{ $data->nama_produk }}">
+                    </td>
+                    <td>{{ $data->nama_produk }}</td>
+                    <td>{{ $data->jenis_id }}</td>
+                    <td>{{ $data->brand_produk }}</td>
+                    <td>{{ $data->harga }}</td>
+                    <td>{{ $data->dimensi }}</td>
+                    <td>{{ $data->total_quantity }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+
         </table>
     </div>
 </div>
