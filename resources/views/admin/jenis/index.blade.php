@@ -26,7 +26,7 @@ Jenis
             <tbody>
                 @foreach ($jenises as $jenis)
                     <tr id="tr_{{ $jenis->id }}">
-                        <th scope="row">{{ $jenis->id }}</th>
+                        <td><b>{{ $jenis->id }}</b></td>
                         <td class="editable" id="td_nama_{{ $jenis->id }}">{{ $jenis->nama }}</td>
                         <td class="editable" id="td_deskripsi_{{ $jenis->id }}">{{ $jenis->deskripsi }}</td>
                         <td>
@@ -53,13 +53,13 @@ Jenis
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Nama</label>
                     <div class="col-sm-12 col-md-10">
-                        <input class="form-control" type="text" placeholder="Nama" name="namajenis" id="namajenis" autofocus>
+                        <input class="form-control" type="text" placeholder="Nama" name="namajenis" id="namajenis" autofocus required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-12 col-md-2 col-form-label">Deskripsi</label>
                     <div class="col-sm-12 col-md-10">
-                        <input class="form-control" type="text" placeholder="Deskripsi" name="descjenis" id="descjenis">
+                        <input class="form-control" type="text" placeholder="Deskripsi" name="descjenis" id="descjenis" required>
                     </div>
                 </div>
             </div>
@@ -104,7 +104,16 @@ Jenis
             },
             success: function(data){
                 if(data.status == 'oke') {
-                    $("#tabeljenis > tbody").append("<tr id='tr_" + data.id + "'><th scope='row'>" + data.id + "</th><td id='td_nama_" + data.id + "'>" + nama + "</td><td id='td_deskripsi_" + data.id + "'>" + desc + "</td><td><a href='#modalEdit' onclick='getEditForm(" + data.id + ")' data-toggle='modal' class='btn btn-primary btn-sm' style='display: inline-block'>Ubah</a><button class='btn btn-danger btn-sm' style='display: inline-block' onclick='if(confirm(\"yakin ingin menghapus " + data.id + " - " + nama + "?\")) deleteDataRemoveTR(" + data.id + ")'>Hapus</button>" + "</td></tr>");
+                    // $("#tabeljenis > tbody").append("<tr id='tr_" + data.id + "'><th scope='row'>" + data.id + "</th><td id='td_nama_" + data.id + "'>" + nama + "</td><td id='td_deskripsi_" + data.id + "'>" + desc + "</td><td><a href='#modalEdit' onclick='getEditForm(" + data.id + ")' data-toggle='modal' class='btn btn-primary btn-sm' style='display: inline-block'>Ubah</a><button class='btn btn-danger btn-sm' style='display: inline-block' onclick='if(confirm(\"yakin ingin menghapus " + data.id + " - " + nama + "?\")) deleteDataRemoveTR(" + data.id + ")'>Hapus</button>" + "</td></tr>");
+                    var table = $('#tabeljenis').DataTable();
+                    var dtable = $(table.row.add( ['<b>' + data.id + '</b>', nama, desc, "<a href='#modalEdit' onclick='getEditForm(" + data.id + ")' data-toggle='modal' class='btn btn-primary btn-sm mr-1' style='display: inline-block'>Ubah</a><button class='btn btn-danger btn-sm' style='display: inline-block' onclick='if(confirm(\"yakin ingin menghapus " + data.id + " - " + nama + "?\")) deleteDataRemoveTR(" + data.id + ")'>Hapus</button>"] ).node());
+                    dtable.find('td')[1].id = 'td_nama_' + data.id;
+                    dtable.find('td')[2].id = 'td_deskripsi_' + data.id;
+                    table.draw(false);
+                    $("#td_nama_" + data.id).addClass('editable');
+                    $("#td_deskripsi_" + data.id).addClass('editable');
+                    $('#tabeljenis tr:last').attr('id', 'tr_' + data.id);
+                    editInline();
                     $('#modalCreate').modal('hide');
                     $('#namajenis').val('');
                     $('#descjenis').val('');
@@ -168,36 +177,41 @@ Jenis
             },
             success: function(data){
                 if(data.status == 'oke') {
-                    $('#tr_'+id).remove();
+                    var table = $('#tabeljenis').DataTable();
+                    table.row('#tr_'+id).remove().draw();
+                    // $('#tr_'+id).remove();
                     alert(data.msg);
                 }
             }
         });
     }
 
-    $('.editable').editable({
-        closeOnEnter: true,
-        callback:function(data){
-            if(data.content){
-                var j_id = data.$el[0].id;
-                var fname = j_id.split('_')[1];
-                var id = j_id.split('_')[2];
+    function editInline() {
+        $('.editable').editable({
+            closeOnEnter: true,
+            callback:function(data){
+                if(data.content){
+                    var j_id = data.$el[0].id;
+                    var fname = j_id.split('_')[1];
+                    var id = j_id.split('_')[2];
 
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route("jenis.saveDataField") }}',
-                    data: {
-                        '_token':'<?php echo csrf_token() ?>',
-                        'id':id,
-                        'fname':fname,
-                        'value':data.content,
-                    },
-                    success: function(data) {
-                        alert(data.msg);
-                    }
-                });
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ route("jenis.saveDataField") }}',
+                        data: {
+                            '_token':'<?php echo csrf_token() ?>',
+                            'id':id,
+                            'fname':fname,
+                            'value':data.content,
+                        },
+                        success: function(data) {
+                            alert(data.msg);
+                        }
+                    });
+                }
             }
-        }
-    })
+        })
+    }
+    editInline();
 </script>
 @endsection
