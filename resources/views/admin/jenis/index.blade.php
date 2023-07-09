@@ -9,6 +9,7 @@ Jenis
     <div class="clearfix mb-20">
         <div class="pull-left">
             <h4 class="text-blue h4" style="display: inline-block">Daftar Jenis</h4>
+            <p>Detail seluruh jenis produk dapat dilihat pada tabel di bawah ini</p>
             <a class="btn btn-success btn-sm ml-2" href="#modalCreate" data-toggle="modal" style="display: inline-block">+</a>
         </div>
     </div>

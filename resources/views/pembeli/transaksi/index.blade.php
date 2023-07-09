@@ -9,7 +9,12 @@ Riwayat Transaksi
     <div class="clearfix mb-20">
         <div class="pull-left">
             <h4 class="text-blue h4" style="display: inline-block">Riwayat Transaksi</h4>
+            @can('pembeli-only')
             <p>Riwayat transaksi yang pernah anda lakukan dapat dilihat pada tabel di bawah</p>
+            @endcan
+            @canany(['owner-only', 'staff-only'])
+            <p>Riwayat transaksi dari keseluruhan pembeli dapat dilihat pada tabel di bawah</p>
+            @endcan
         </div>
     </div>
     <div class="table-responsive">

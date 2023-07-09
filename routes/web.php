@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProdukController;
@@ -63,6 +64,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('member', MemberController::class);
     Route::post('member/halaman-checkout', [MemberController::class, 'ambilKeranjang'])->name('member.halamancheckout');
     Route::post('member/update-membership', [MemberController::class, 'updateMembership'])->name('member.membership');
+
+    Route::get('laporan', [LaporanController::class, 'index'])->name('laporan');
 });
 
 Auth::routes();

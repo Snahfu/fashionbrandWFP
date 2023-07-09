@@ -8,7 +8,8 @@ Kategori
 <div class="pd-20 card-box mb-30">
     <div class="clearfix mb-20">
         <div class="pull-left">
-            <h4 class="text-blue h4" style="display: inline-block">Daftar Kategori</h4>
+            <h4 class="text-blue h4" style="display: inline-block">Daftar Kategori</h4>\
+            <p>Detail seluruh kategori produk dapat dilihat pada tabel di bawah ini</p>
             <a class="btn btn-success btn-sm ml-2" href="#modalCreate" data-toggle="modal" style="display: inline-block">+</a>
             <button class="btn btn-primary" onclick="coba()">Coba</button>
         </div>

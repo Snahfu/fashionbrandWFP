@@ -91,6 +91,12 @@
                         </a>
                     </li>
                 @endcan
+
+                <li>
+                    <a href="{{ route('laporan') }}" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-plus-square-o"></span><span class="mtext">Laporan</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
