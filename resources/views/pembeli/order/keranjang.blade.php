@@ -57,7 +57,7 @@
                     <td id="">{{ $value["name"] }}</td>
                     <td id="">{{ $value["price"] }}</td>
                     <td>
-                        <input type="number" value="{{ $value['quantity'] }}" id="quantity_{{ $key }}"
+                        <input type="number" value="{{ $value['quantity'] }}" min="1" id="quantity_{{ $key }}"
                             onchange="ubah({{ $key }})" class="form-control">
                     </td>
                     <td id="subtotal_{{ $key }}">{{ $subtotal }}</td>

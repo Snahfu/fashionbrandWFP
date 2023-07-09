@@ -110,10 +110,14 @@
                         <img src="{{ asset('assets/vendors/images/photo1.jpg') }}" alt="">
                     </span>
                     <span class="user-name">{{ Auth::user()->name }}</span>
+                    @can('pembeli-only')
+                    @if (Auth::user()->member==1)
+                    <span class="user-name"> <i class="fa-solid fa-coins"></i> {{ Auth::user()->poin }}</span>
+                    @endif
+                    @endcan
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
+                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                         {{ __('Logout') }}
                     </a>

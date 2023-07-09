@@ -27,8 +27,8 @@
                 $subtotal = (int)$value["quantity"] * (int)$value["price"];
                 $total += $subtotal;
                 $pajak = ceil($total * 0.11);
-                if($poin > $total + $pajak) $poin = floor(($total + $pajak) / 1000) * 1000;
-                $poin_didapat = floor($total / 100000);
+                if($poin > $total + $pajak) $poin = floor($total / 1000) * 1000;
+                if($user->member == 1) $poin_didapat = floor($total / 100000);
                 @endphp
                 <tr id="row_{{ $key }}">
                     <th scope="row">{{ $key }}</th>
@@ -42,13 +42,13 @@
             </tbody>
         </table>
         <div class="text-right">
-            <p>Subtotal barang: Rp<b id="subtotal">{{ $total }}</b></p>
-            <p>PPN (11%): Rp<b id="pajak">{{ $pajak }}</b></p>
-            <p>Pakai poin: <input type="checkbox" id="check" onclick="check()" @if(!($user->member == 1 && $poin > 0 && $total >= 100000)) disabled @endif> <label for="check"><b
-                        id="poin_dipakai">{{$user->poin }}</b> (Rp{{ $poin }})</label></p>
+            <p>Subtotal barang: Rp<b id="subtotal" nilai="{{ $total }}">{{ number_format($total,2,',','.') }}</b></p>
+            <p>PPN (11%): Rp<b id="pajak" nilai="{{ $pajak }}">{{ number_format($pajak,2,',','.'); }}</b></p>
+            <p @if ($user->member != 1) style="visibility: hidden;" @endif>Pakai poin: <input type="checkbox" id="check" onclick="check()" @if(!($user->member == 1 && $poin > 0 && $total >= 100000)) disabled @endif> <label for="check"><b
+                        id="poin_dipakai" nilai="{{ $poin / 1000 }}">{{ $poin / 1000 }}</b> (Rp{{ number_format($poin,2,',','.'); }})</label></p>
             <hr>
-            <p>Total bayar: Rp<b id="total">{{ $total+$pajak }}</b></p>
-            <p>Poin yang didapat: <b id="poin_didapat">{{ $poin_didapat }}</b> (Rp{{
+            <p>Total bayar: Rp<b id="total" nilai="{{ $total+$pajak }}">{{ number_format($total+$pajak,2,',','.') }}</b></p>
+            <p @if ($user->member != 1) style="visibility: hidden;" @endif>Poin yang didapat: <b id="poin_didapat" nilai="{{ $poin_didapat }}">{{ $poin_didapat }}</b> (Rp{{
                 $poin_didapat*1000 }})</p>
             <button class="btn btn-primary" id="btnPesan" onclick="pesan()">Pesan</button>
         </div>
@@ -58,18 +58,20 @@
 <script>
     function check(){
         if($('#check')[0].checked){
-            $('#total').html('{{ $total+$pajak-$poin }}')
+            $('#total').attr('nilai','{{ $total+$pajak-$poin }}');
+            $('#total').html('{{ number_format($total+$pajak-$poin,2,',','.') }}')
         }else{
-            $('#total').html('{{ $total+$pajak }}')
+            $('#total').attr('nilai','{{ $total+$pajak }}');
+            $('#total').html('{{ number_format($total+$pajak,2,',','.') }}')
         }
     }
 
     function pesan(){
-        let subtotal = parseInt($('#subtotal').html());
-        let pajak = parseInt($('#pajak').html());
-        let poin_dipakai = $('#check')[0].checked?parseInt($('#poin_dipakai').html()):0;
-        let total = parseInt($('#total').html());
-        let poin_didapat = parseInt($('#poin_didapat').html());
+        let subtotal = parseInt($('#subtotal').attr('nilai'));
+        let pajak = parseInt($('#pajak').attr('nilai'));
+        let poin_dipakai = $('#check')[0].checked?parseInt($('#poin_dipakai').attr('nilai')):0;
+        let total = parseInt($('#total').attr('nilai'));
+        let poin_didapat = parseInt($('#poin_didapat').attr('nilai'));
 
         $.ajax({
                 type:'POST',
