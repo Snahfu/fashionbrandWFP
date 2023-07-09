@@ -123,7 +123,7 @@ class OrderController extends Controller
             $order->save();
             $order_id = $order->id;
 
-            $user->poin -= $poin_dipakai + $poin_didapat;
+            $user->poin = $user->poin - $poin_dipakai + $poin_didapat;
             $user->save();
 
             $produks = [];
@@ -153,76 +153,6 @@ class OrderController extends Controller
             ));
         }
     }
-
-    public function checkoutProcess(Request $request)
-    {
-        $user = User::find(Auth::user()->id);
-
-        $subTotal = 0;
-        $pesan = "Berhasil mengkonversikan poin";
-        $cart = session("cart");
-
-        // Kalau cart kosong
-        if (!$cart) {
-            $pesan = "Silahkan memasukan barang ke keranjang terlebih dahulu!";
-            return response()->json(array(
-                "status" => "failure",
-                "pesan" => $pesan
-            ));
-        }
-
-        // Bukan Member
-        if ($user->member) {
-            $pesan = "Anda bukan member";
-            return response()->json(array(
-                "status" => "failure",
-                "pesan" => $pesan
-            ));
-        }
-
-        // Hitung subtotal
-        foreach ($cart as $key => $product) {
-            $temporaryTotal = $product["quantity"] * $product["price"];
-            $subTotal += $temporaryTotal;
-        }
-
-        // Subtotal kurang dari 100rb
-        if ($subTotal < 100000) {
-            $pesan = "Untuk menggunakan poin silahkan melakukan belanja lebih!";
-            return response()->json(array(
-                "status" => "failure",
-                "pesan" => $pesan
-            ));
-        }
-
-
-        $order = new Order();
-        $order->user_id = Auth::user()->id;
-        $order->subtotal = 0;
-        $order->pajak = 0;
-        $order->potongan = 0;
-        $order->total = 0;
-        $order->poin_didapat = 0;
-        $order->save();
-
-        foreach ($cart as $key => $product) {
-            $temporaryTotal = $product["quantity"] * $product["price"];
-            $order->produks()->attach($key, [
-                "kuantitas" => $product["quantity"],
-                "harga" => $product["price"],
-                "subtotal" => $temporaryTotal
-            ]);
-            $subTotal += $temporaryTotal;
-        }
-        // Hitung SubTotal, Total, Pajak, Pemotongan
-
-
-        return response()->json(array(
-            "status" => "success",
-            "pesan" => $pesan
-        ));
-    }
-
 
     /**
      * Show the form for creating a new resource.

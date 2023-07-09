@@ -26,13 +26,7 @@
             <div class="col-6 text-center">
                 <div class="form-group">
                     <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected">
-                        <span class="input-group-btn input-group-prepend">
-                            <button id="min_qty_product" class="btn btn-primary bootstrap-touchspin-down" type="button">-</button>
-                        </span>
-                        <input id="qty_produk_cart" type="text" value="1" name="qty_produk_cart" class="form-control">
-                        <span class="input-group-btn input-group-append">
-                            <button id="add_qty_product" class="btn btn-primary bootstrap-touchspin-up" type="button">+</button>
-                        </span>
+                        <input id="qty_produk_cart" type="number" value="1" min="1" name="qty_produk_cart" class="form-control">
                     </div>
                 </div>
                 <a class="btn btn-success w-100" style="margin-top: -10px" href="#" onclick="addToCart( {{ $data->id }} )">
