@@ -34,6 +34,5 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('staff-only', function($user){
             return ($user->role == 'staff');
         });
-        
     }
 }

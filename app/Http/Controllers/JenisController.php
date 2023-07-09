@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Jenis;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JenisController extends Controller
 {
@@ -15,6 +16,10 @@ class JenisController extends Controller
      */
     public function index()
     {
+        $userRole = Auth::user()->role;
+        if($userRole == "pembeli"){
+            abort(403);
+        }
         $jenises = Jenis::all();
         return view('admin.jenis.index', compact('jenises'));
     }

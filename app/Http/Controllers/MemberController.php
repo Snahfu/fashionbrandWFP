@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class MemberController extends Controller
@@ -16,6 +17,10 @@ class MemberController extends Controller
     public function index()
     {
         // Logic ambil semua member
+        $userRole = Auth::user()->role;
+        if($userRole == "pembeli"){
+            abort(403);
+        }
         $members = User::where('role', 'pembeli')->where('member', 1)->get();
         return view('admin.member.index', compact('members'));
     }
@@ -27,6 +32,10 @@ class MemberController extends Controller
      */
     public function create()
     {
+        $userRole = Auth::user()->role;
+        if($userRole != "owner"){
+            abort(403);
+        }
         // Logic ambil semua pembeli yang sudah beli dan belum menjadi member
         $pembelis = DB::table('users')
             ->join('orders', 'users.id', '=', 'orders.user_id')
