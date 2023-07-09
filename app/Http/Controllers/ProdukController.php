@@ -193,11 +193,12 @@ class ProdukController extends Controller
     {
         $id = $request->get('id');
         $data = Produk::find($id);
+        $jenis = Jenis::withTrashed()->where('id', $data->jenis_id)->get();
         $kategoris = DB::select(DB::raw("SELECT * FROM kategoris k INNER JOIN (SELECT kategori_id FROM kategori_produk WHERE produk_id=$id) kp ON k.id = kp.kategori_id"));
 
         return response()->json(array(
             'status' => 'oke',
-            'msg' => view('admin.produk.show', compact('data', 'kategoris'))->render(),
+            'msg' => view('admin.produk.show', compact('data', 'kategoris', 'jenis'))->render(),
         ));
     }
 

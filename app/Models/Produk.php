@@ -21,7 +21,7 @@ class Produk extends Model
     ];
     public function jenis()
     {
-        return $this->belongsTo(Jenis::class);
+        return $this->belongsTo(Jenis::class)->withTrashed();
     }
 
     public function kategoriproduk()

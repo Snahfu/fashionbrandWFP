@@ -7,7 +7,7 @@
                 <p class="card-text">Rp. {{ $data->harga }}</p>
                 <small><b><a href="#" style="pointer-events: none; cursor: default;"
                             class="card-link text-muted mr-2">{{
-                            $data->jenis->nama }}</a></b></small>
+                            $jenis[0]->nama }}</a></b></small>
                 <small><b><a href="#" style="pointer-events: none; cursor: default;" class="card-link text-muted"> |
                         </a></b></small>
                 <small><b>
