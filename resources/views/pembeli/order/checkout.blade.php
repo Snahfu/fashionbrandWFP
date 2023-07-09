@@ -87,6 +87,7 @@
                 success: function(data){
                     $('#modalCheckout').modal('toggle')
                     $('tbody').html('');
+                    location.reload();
                     alert(data.msg)
                 }
             });
