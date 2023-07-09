@@ -122,7 +122,7 @@ class ProdukController extends Controller
         $old = $data->url_gambar;
 
         // update image
-        $file = $request->file('gambarproduk');
+        $file = $request->file('edit_gambar');
         $imgFolder = 'images';
         $imgFile = time() . "_" . $file->getClientOriginalName();
         $file->move($imgFolder, $imgFile);
