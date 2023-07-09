@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +20,10 @@ class OrderController extends Controller
 
     public function keranjang()
     {
+        $userRole = Auth::user()->role;
+        if($userRole != "pembeli"){
+            abort(403);
+        }
         $carts = session()->get("cart");
         return view('pembeli.order.keranjang', compact('carts'));
     }
@@ -54,12 +59,20 @@ class OrderController extends Controller
 
     public function riwayatSemuaTransaksi()
     {
+        $userRole = Auth::user()->role;
+        if($userRole == "pembeli"){
+            abort(403);
+        }
         $riwayats = Order::orderBy('created_at')->get();
         return view("pembeli.transaksi.index", compact('riwayats'));
     }
 
     public function riwayatTransaksi()
     {
+        $userRole = Auth::user()->role;
+        if($userRole != "pembeli"){
+            abort(403);
+        }
         $userId = Auth::user()->id;
         $riwayats = Order::where("user_id", $userId)->orderBy('created_at', 'DESC')->get();
         return view("pembeli.transaksi.index", compact('riwayats'));
