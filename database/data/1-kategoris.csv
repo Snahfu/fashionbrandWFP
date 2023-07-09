@@ -1,4 +1,9 @@
 "id","nama","deskripsi","created_at","updated_at","deleted_at"
-"1","Pria","Lorem ipsum dolor sit amet","2023-07-01 02:12:26","2023-07-07 17:38:09",NULL
-"2","Wanita","Lorem ipsum dolor sit amet","2023-07-01 02:16:36","2023-07-01 02:16:36",NULL
-"3","Anak-anak","Lorem ipsum dolor sit amet","2023-07-01 02:17:20","2023-07-01 02:17:20",NULL
+"1","Pria","Produk untuk Pria","2023-07-01 02:12:26","2023-07-07 17:38:09",NULL
+"2","Wanita","Produk untuk Wanita","2023-07-01 02:16:36","2023-07-01 02:16:36",NULL
+"3","Anak-anak","Produk untuk anak-anak","2023-07-01 02:17:20","2023-07-01 02:17:20",NULL
+"4","Bayi","Produk untuk bayi","2023-07-01 02:17:20","2023-07-01 02:17:20",NULL
+"5","Lansia","Produk untuk lanjut usia","2023-07-01 02:17:20","2023-07-01 02:17:20",NULL
+"6","Cosplay","Produk yang dikhususkan pada cosplayer","2023-07-01 02:17:20","2023-07-01 02:17:20",NULL
+"7","Coba 1","Lorem ipsum dolor sit amet","2023-07-01 02:17:20","2023-07-01 02:17:20",NULL
+"8","Dummy Data","Lorem ipsum dolor sit amet","2023-07-01 02:17:20","2023-07-01 02:17:20",NULL
