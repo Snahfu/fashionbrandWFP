@@ -64,7 +64,7 @@ Login Page
 							<div class="col-6">
 								<div class="custom-control custom-checkbox">
 									<input class="custom-control-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-									<label class="custom-control-label" for="customCheck1">Remember</label>
+									<label class="custom-control-label" for="remember">Remember</label>
 								</div>
 							</div>
 							<div class="col-6">
